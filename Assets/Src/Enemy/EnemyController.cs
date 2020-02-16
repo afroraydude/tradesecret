@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public EnemySight enemySight;
-    public EnemyPatrol EnemyPatrol;
+    public EnemyPatrol enemyPatrol;
 
     public enum state
     {
@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     void Awake()
     {
         enemySight = GetComponent<EnemySight>();
-        EnemyPatrol = GetComponent<EnemyPatrol>();
+        enemyPatrol = GetComponent<EnemyPatrol>();
     }
     
     void Start()
@@ -31,6 +31,9 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-
+        if (currentState == state.patrol)
+        {
+            enemyPatrol.patrolling = true;
+        }
     }
 }
