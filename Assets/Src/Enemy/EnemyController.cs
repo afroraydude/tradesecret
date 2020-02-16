@@ -2,17 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public EnemySight enemySight;
+    public EnemyPatrol EnemyPatrol;
+
+    public enum state
+    {
+        idle = 0,
+        patrol = 1,
+        warning = 2,
+        chase = 3,
+        warningFollow = 4
+    }
+
+    public state currentState = state.idle;
+
+    void Awake()
+    {
+        enemySight = GetComponent<EnemySight>();
+        EnemyPatrol = GetComponent<EnemyPatrol>();
+    }
+    
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
