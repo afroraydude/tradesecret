@@ -1,29 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace TradeSecret.Enemy
 {
     public class EnemyController : MonoBehaviour
     {
+        // Load components
         public EnemySight enemySight;
         public EnemyPatrol enemyPatrol;
+        public Animator enemyAnimator;
+        public EnemyStateMachine stateMachine;
 
-        public enum state
+        private enum states
         {
             idle = 0,
             patrol = 1,
-            warning = 2,
-            chase = 3,
-            warningFollow = 4
+            warn = 2,
+            pursue = 3
         }
 
-        public state currentState = state.idle;
+        // For Unity Editor
+        [SerializeField] private states debugCurrentState;
+
+
+        [SerializeField] private states startState;
+
+        List<IState> iStates = new List<IState>();
 
         void Awake()
         {
-            enemySight = GetComponent<EnemySight>();
-            enemyPatrol = GetComponent<EnemyPatrol>();
+            enemySight = GetComponentInParent<EnemySight>();
+            enemyPatrol = GetComponentInParent<EnemyPatrol>();
+            enemyAnimator = GetComponentInParent<Animator>();
+            stateMachine = GetComponentInParent<EnemyStateMachine>();
+
+            iStates.AddRange(new IState[] { new StateIdle(enemyAnimator), new StatePatrol(enemyAnimator, enemyPatrol), new StateWarn(enemyAnimator), new StatePursue(enemyAnimator) });
+
+            stateMachine.SwitchState(iStates[(int) startState]);
+            
         }
 
         void Start()
@@ -33,10 +49,8 @@ namespace TradeSecret.Enemy
 
         void Update()
         {
-            if (currentState == state.patrol)
-            {
-                enemyPatrol.patrolling = true;
-            }
+            debugCurrentState = (states)iStates.IndexOf(stateMachine._currentState);
+            stateMachine.ExecuteStateUpdate();
         }
     }
 }

@@ -511,7 +511,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8469494145858465668, guid: 621600ca9b6b8463f95094edcb62c4dc, type: 3}
+  - {fileID: 2100000, guid: 034f2f6fc842ad444be28a6109ecaa3f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -751,7 +751,7 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: a50895f3db6ef4b9db5ca9594bfd092d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.25
+  m_Radius: 1
   m_Height: 6
   m_Direction: 1
   m_Center: {x: 0, y: 3, z: 0}
