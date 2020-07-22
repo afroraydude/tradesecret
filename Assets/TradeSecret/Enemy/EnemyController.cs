@@ -13,6 +13,18 @@ namespace TradeSecret.Enemy
         public Animator enemyAnimator;
         public EnemyStateMachine stateMachine;
 
+        [SerializeField] private bool playerSeen = false;
+        [SerializeField] private bool cooledDown = true;
+        [SerializeField] private bool chaseBegun = false;
+
+        [SerializeField] private float scanStartTime;
+        [SerializeField] private float currentTime;
+        [SerializeField] private float timeUntilChase = 5;
+        
+        // cooldown
+        [SerializeField] private float cooldownStartTime;
+        [SerializeField] private float timeUntilCooldown = 5;
+
         private enum states
         {
             idle = 0,
@@ -51,6 +63,49 @@ namespace TradeSecret.Enemy
         {
             debugCurrentState = (states)iStates.IndexOf(stateMachine._currentState);
             stateMachine.ExecuteStateUpdate();
+            
+            currentTime += Time.deltaTime;
+
+            if (playerSeen)
+            {
+                cooldownStartTime = currentTime;
+            }
+
+            if (playerSeen && (currentTime - scanStartTime) > timeUntilChase && !chaseBegun)
+            {
+                Debug.Log("Begin chase!");
+                chaseBegun = true;
+                cooledDown = false;
+            }
+
+            if (!playerSeen)
+            {
+                scanStartTime = currentTime;
+            }
+
+            if (!playerSeen && (currentTime - cooldownStartTime) > timeUntilCooldown && !cooledDown)
+            {
+                Debug.Log("Cooled down!");
+                chaseBegun = false;
+                cooledDown = true;
+            }
+        }
+
+        public void OnRaycastHit(bool isPlayer)
+        {
+            if (isPlayer)
+            {
+                stateMachine.SwitchState(iStates[(int)states.warn]);
+                if (playerSeen == false) 
+                    scanStartTime = currentTime;
+                playerSeen = true;
+                cooledDown = false;
+            }
+            else
+            {
+                playerSeen = false;
+                stateMachine.SwitchToPreviousState();
+            }
         }
     }
 }
