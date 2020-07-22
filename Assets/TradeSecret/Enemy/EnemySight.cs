@@ -55,8 +55,9 @@ namespace TradeSecret.Enemy
             */
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.SphereCast(raycastPosition, 0.25f, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+            if (Physics.SphereCast(raycastPosition, 0.25f, transform.TransformDirection(Vector3.forward), out hit, 100))
             {
+                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 Debug.Log("Did Hit");
                 if (hit.collider.tag == "Player")
                 {
@@ -70,7 +71,7 @@ namespace TradeSecret.Enemy
             }
             else
             {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
+                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 100, Color.red);
                 Debug.Log("Did not Hit");
             }
         }

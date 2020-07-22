@@ -273,8 +273,8 @@ MonoBehaviour:
   enemyAnimator: {fileID: 0}
   stateMachine: {fileID: 0}
   playerSeen: 0
-  cooledDown: 0
-  chaseBegun: 0
+  cooledDown: 1
+  isChasing: 0
   scanStartTime: 0
   currentTime: 0
   timeUntilChase: 2
