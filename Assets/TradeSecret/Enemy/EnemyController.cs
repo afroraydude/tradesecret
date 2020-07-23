@@ -18,13 +18,17 @@ namespace TradeSecret.Enemy
         [SerializeField] private bool cooledDown = true;
         [FormerlySerializedAs("chaseBegun")] [SerializeField] private bool isChasing = false;
 
-        [SerializeField] private float scanStartTime;
+        
         [SerializeField] private float currentTime;
-        [SerializeField] private float timeUntilChase = 5;
+        
+        [SerializeField] private float scanStartTime;
+        [SerializeField] private float timeUntilChase = 2;
         
         // cooldown
         [SerializeField] private float cooldownStartTime;
-        [SerializeField] private float timeUntilCooldown = 5;
+        [SerializeField] private float timeUntilCooldown = 10;
+
+        private RaycastHit hit;
 
         private enum states
         {
@@ -40,7 +44,7 @@ namespace TradeSecret.Enemy
 
         [SerializeField] private states startState = states.idle;
 
-        List<IState> iStates = new List<IState>();
+        List<EnemyState> iStates = new List<EnemyState>();
 
         void Awake()
         {
@@ -49,7 +53,7 @@ namespace TradeSecret.Enemy
             enemyAnimator = GetComponentInParent<Animator>();
             stateMachine = GetComponentInParent<EnemyStateMachine>();
 
-            iStates.AddRange(new IState[] { new StateIdle(enemyAnimator), new StatePatrol(enemyAnimator, enemyPatrol), new StateWarn(enemyAnimator), new StatePursue(enemyAnimator) });
+            iStates.AddRange(new EnemyState[] { new EnemyStateIdle(enemyAnimator, enemyPatrol), new EnemyStatePatrol(enemyAnimator, enemyPatrol), new EnemyStateWarn(enemyAnimator, enemyPatrol), new EnemyStatePursue(enemyAnimator, enemyPatrol) });
 
             stateMachine.SwitchState(iStates[(int) startState]);
             
@@ -62,10 +66,11 @@ namespace TradeSecret.Enemy
 
         void Update()
         {
-            debugCurrentState = (states)iStates.IndexOf(stateMachine._currentState);
+            debugCurrentState = (states)iStates.IndexOf(stateMachine.currentEnemyState);
             stateMachine.ExecuteStateUpdate();
             
             currentTime += Time.deltaTime;
+            hit = enemySight.globalRaycast;
 
             if (playerSeen)
             {
@@ -94,15 +99,30 @@ namespace TradeSecret.Enemy
 
         public void OnRaycastHit(bool isPlayer)
         {
-            if (isChasing) stateMachine.SwitchState(iStates[(int) states.pursue]);
+
+            if (isChasing)
+            {
+                stateMachine.SwitchState(iStates[(int) states.pursue]);
+                stateMachine.currentEnemyState.OnHit(hit);
+            }
             if (!isChasing)
             {
-                if (cooledDown) stateMachine.SwitchState(iStates[(int) startState]);
-                if (!cooledDown) stateMachine.SwitchState(iStates[(int)states.warn]);
+                if (cooledDown)
+                {
+                    stateMachine.SwitchState(iStates[(int) startState]);
+                }
+                if (!cooledDown)
+                {
+                    stateMachine.SwitchState(iStates[(int)states.warn]);
+                }
             }
             if (isPlayer)
             {
-                if (!isChasing) stateMachine.SwitchState(iStates[(int)states.warn]);
+                if (!isChasing)
+                {
+                    stateMachine.SwitchState(iStates[(int)states.warn]);
+                    stateMachine.currentEnemyState.OnHit(hit);
+                }
                 if (playerSeen == false) 
                     scanStartTime = currentTime;
                 playerSeen = true;

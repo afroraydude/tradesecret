@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,11 +10,23 @@ namespace TradeSecret.Enemy
     {
         public Vector3 raycastPosition;
         public Quaternion raycastRotation;
+        public Transform enemyHead;
+        public Animator enemyAnimator;
+        public RaycastHit globalRaycast;
+
+        private void Awake()
+        {
+            enemyAnimator = GetComponentInParent<Animator>();
+            enemyHead = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:Neck").Find("mixamorig:Head");
+            //enemyHead = enemyAnimator.GetBoneTransform()
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            raycastPosition = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
-            raycastRotation = transform.rotation;
+            
+            //raycastPosition = enemyHead.transform.position;
+            //raycastRotation = transform.rotation;
         }
 
         // Update is called once per frame
@@ -26,9 +39,8 @@ namespace TradeSecret.Enemy
         {
             
 
-            raycastPosition = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
-            raycastRotation = transform.rotation;
-
+            raycastPosition = enemyHead.transform.position;
+            raycastRotation = enemyHead.transform.rotation;
 
             /*
             RaycastHit hit;
@@ -55,9 +67,10 @@ namespace TradeSecret.Enemy
             */
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.SphereCast(raycastPosition, 0.25f, transform.TransformDirection(Vector3.forward), out hit, 100))
+            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(Vector3.forward), out hit, 100))
             {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+                globalRaycast = hit;
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 Debug.Log("Did Hit");
                 if (hit.collider.tag == "Player")
                 {
@@ -73,6 +86,7 @@ namespace TradeSecret.Enemy
             {
                 Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 100, Color.red);
                 Debug.Log("Did not Hit");
+                gameObject.SendMessage("OnRaycastHit", false);
             }
         }
     }

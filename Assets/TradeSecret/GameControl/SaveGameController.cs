@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TradeSecret.System
+namespace TradeSecret.GameControl
 {
     public class SaveGameController : MonoBehaviour
     {

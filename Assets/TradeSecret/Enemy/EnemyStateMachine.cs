@@ -1,27 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 namespace TradeSecret.Enemy
 {
     public class EnemyStateMachine : MonoBehaviour
     {
-        public IState _currentState;
-        public IState _previousState;
+        [FormerlySerializedAs("_currentState")] public EnemyState currentEnemyState;
+        [FormerlySerializedAs("_previousState")] public EnemyState previousEnemyState;
 
         /// <summary>
         /// change our state
         /// </summary>
-        /// <param name="newState"></param>
-        public void SwitchState(IState newState)
+        /// <param name="newEnemyState"></param>
+        public void SwitchState(EnemyState newEnemyState)
         {
-            if (_currentState != null)
+            if (currentEnemyState != null)
             {
-                this._currentState.OnExit();
-                this._previousState = _currentState;
+                this.currentEnemyState.OnExit();
+                this.previousEnemyState = currentEnemyState;
             }
 
-            this._currentState = newState;
-            this._currentState.OnEnter();
+            this.currentEnemyState = newEnemyState;
+            this.currentEnemyState.OnEnter();
         }
 
         /// <summary>
@@ -30,10 +31,10 @@ namespace TradeSecret.Enemy
         public void ExecuteStateUpdate()
         {
             // if our state is null return
-            if (this._currentState == null)
+            if (this.currentEnemyState == null)
                 return;
 
-            this._currentState.OnUpdate();
+            this.currentEnemyState.OnUpdate();
         }
 
         /// <summary>
@@ -41,23 +42,27 @@ namespace TradeSecret.Enemy
         /// </summary>
         public void SwitchToPreviousState()
         {
-            if (this._currentState == null || _previousState == null)
+            if (this.currentEnemyState == null || previousEnemyState == null)
                 return;
 
-            this._currentState.OnExit();
-            this._currentState = _previousState;
-            this._currentState.OnEnter();
+            this.currentEnemyState.OnExit();
+            this.currentEnemyState = previousEnemyState;
+            this.currentEnemyState.OnEnter();
         }
 
-        public IState GetCurrentState()
+        public EnemyState GetCurrentState()
         {
-            return _currentState;
+            return currentEnemyState;
+        }
+
+        public void SetHit(RaycastHit hit)
+        {
+            this.currentEnemyState.OnHit(hit);
         }
     }
 
-    public interface IState
+    public interface EnemyState
     {
-
         /// <summary>
         /// This is called when this state is entered
         /// </summary>
@@ -72,42 +77,18 @@ namespace TradeSecret.Enemy
         /// This is called when we exit the state
         /// </summary>
         void OnExit();
+
+        void OnHit(RaycastHit hit);
     }
 
-    public class StateIdle : IState
+    public class EnemyStateIdle : EnemyState
     {
         private readonly Animator animator;
-        private static readonly int isState = Animator.StringToHash("isIdling");
-
-
-        public StateIdle(Animator animator)
-        {
-            this.animator = animator;
-        }
-
-        public void OnEnter()
-        {
-            animator.SetTrigger(isState);
-        }
-
-        public void OnUpdate()
-        {
-        }
-
-        public void OnExit()
-        {
-
-        }
-    }
-
-    public class StatePatrol : IState
-    {
-        private readonly Animator animator;
-        private static readonly int isState = Animator.StringToHash("isPatrolling");
         private EnemyPatrol patrol;
+        private RaycastHit _raycastHit;
 
 
-        public StatePatrol(Animator animator, EnemyPatrol patrol)
+        public EnemyStateIdle(Animator animator, EnemyPatrol patrol)
         {
             this.animator = animator;
             this.patrol = patrol;
@@ -115,7 +96,7 @@ namespace TradeSecret.Enemy
 
         public void OnEnter()
         {
-            animator.SetTrigger(isState);
+            animator.SetBool("isWalking", false);
         }
 
         public void OnUpdate()
@@ -124,59 +105,130 @@ namespace TradeSecret.Enemy
 
         public void OnExit()
         {
+            animator.SetBool("isWalking", false);
+        }
 
+        public void OnHit(RaycastHit hit)
+        {
+            _raycastHit = hit;
         }
     }
 
-    public class StateWarn : IState
+    public class EnemyStatePatrol : EnemyState
     {
         private readonly Animator animator;
-        private static readonly int isState = Animator.StringToHash("isWarning");
+        private EnemyPatrol patrol;
+        private RaycastHit _raycastHit;
 
 
-        public StateWarn(Animator animator)
+        public EnemyStatePatrol(Animator animator, EnemyPatrol patrol)
         {
             this.animator = animator;
+            this.patrol = patrol;
         }
 
         public void OnEnter()
         {
-            animator.SetTrigger(isState);
+            animator.SetBool("isWalking", true);
         }
 
         public void OnUpdate()
         {
+            animator.SetBool("isWalking", true);
+            if (patrol.agent.remainingDistance < patrol.minRemainingDistance)
+            {
+                patrol.GoToNextPoint();
+            }
         }
 
         public void OnExit()
         {
-
+            animator.SetBool("isWalking", false);
+        }
+        
+        public void OnHit(RaycastHit hit)
+        {
+            _raycastHit = hit;
         }
     }
 
-    public class StatePursue : IState
+    public class EnemyStateWarn : EnemyState
     {
         private readonly Animator animator;
-        private static readonly int isState = Animator.StringToHash("isPursuing");
+        private EnemyPatrol patrol;
+        private RaycastHit _raycastHit;
 
 
-        public StatePursue(Animator animator)
+        public EnemyStateWarn(Animator animator, EnemyPatrol patrol)
         {
             this.animator = animator;
+            this.patrol = patrol;
+        }
+        
+        public void OnEnter()
+        {
+            animator.SetBool("isWalking", true);
+            patrol.agent.destination = _raycastHit.point;
+        }
+
+        public void OnUpdate()
+        {
+            
+            if (patrol.agent.remainingDistance < 0.5)
+            {
+                Debug.Log("At point");
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isLooking", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", true);
+            }
+        }
+
+        public void OnExit()
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isLooking", false);
+        }
+        
+        public void OnHit(RaycastHit hit)
+        {
+            _raycastHit = hit;
+        }
+    }
+
+    public class EnemyStatePursue : EnemyState
+    {
+        private readonly Animator animator;
+        private EnemyPatrol patrol;
+        private RaycastHit _raycastHit;
+
+
+        public EnemyStatePursue(Animator animator, EnemyPatrol patrol)
+        {
+            this.animator = animator;
+            this.patrol = patrol;
         }
 
         public void OnEnter()
         {
-            animator.SetTrigger(isState);
+            animator.SetBool("isWalking", true);
         }
 
         public void OnUpdate()
         {
+            animator.SetBool("isWalking", true);
         }
 
         public void OnExit()
         {
-
+            animator.SetBool("isWalking", false);
+        }
+        
+        public void OnHit(RaycastHit hit)
+        {
+            _raycastHit = hit;
         }
     }
 }
