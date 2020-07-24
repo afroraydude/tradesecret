@@ -42,29 +42,6 @@ namespace TradeSecret.Enemy
             raycastPosition = enemyHead.transform.position;
             raycastRotation = enemyHead.transform.rotation;
 
-            /*
-            RaycastHit hit;
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(raycastPosition, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
-            {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * hit.distance, Color.green);
-                Debug.Log("Did Hit");
-                if (hit.collider.tag == "Player")
-                {
-                    Debug.Log("is player");
-                    gameObject.SendMessage("OnRaycastHit", true);
-                } else
-                {
-                    Debug.Log("not player");
-                    gameObject.SendMessage("OnRaycastHit", false);
-                }
-            }
-            else
-            {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-                Debug.Log("Did not Hit");
-            }
-            */
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(Vector3.forward), out hit, 100))
@@ -89,5 +66,10 @@ namespace TradeSecret.Enemy
                 gameObject.SendMessage("OnRaycastHit", false);
             }
         }
+
+        public void OnSoundHeard(GameObject soundCreator)
+        {
+            
+        } 
     }
 }

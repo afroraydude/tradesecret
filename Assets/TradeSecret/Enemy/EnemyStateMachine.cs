@@ -7,8 +7,8 @@ namespace TradeSecret.Enemy
 {
     public class EnemyStateMachine : MonoBehaviour
     {
-        [FormerlySerializedAs("_currentState")] public EnemyState currentEnemyState;
-        [FormerlySerializedAs("_previousState")] public EnemyState previousEnemyState;
+        private EnemyState currentEnemyState;
+        private EnemyState previousEnemyState;
 
         /// <summary>
         /// change our state
