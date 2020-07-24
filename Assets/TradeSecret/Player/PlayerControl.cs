@@ -8,6 +8,7 @@ namespace TradeSecret.Player
     {
         public Animator anim;
         public float defaultSpeed = 10.0f;
+        public bool crouched = false;
 
         // Start is called before the first frame update
         void Start()
@@ -18,6 +19,7 @@ namespace TradeSecret.Player
         // Update is called once per frame
         void Update()
         {
+            anim.SetBool("Crouched", crouched);
 
             float speed = defaultSpeed;
 
@@ -29,6 +31,11 @@ namespace TradeSecret.Player
             else
             {
                 anim.SetBool("Walking", false);
+            }
+
+            if (Input.GetKey(KeyCode.C))
+            {
+                crouched = !crouched;
             }
 
             // Translation of stuff aka acceleration and speed

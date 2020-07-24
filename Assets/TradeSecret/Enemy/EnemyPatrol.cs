@@ -43,7 +43,7 @@ namespace TradeSecret.Enemy
             {
                 return;
             }
-
+    
             agent.destination = patrolPoints[destPoint].position;
 
             destPoint = (destPoint + 1) % patrolPoints.Length;

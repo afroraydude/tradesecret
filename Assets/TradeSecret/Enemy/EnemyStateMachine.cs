@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Serialization;
+using NotImplementedException = System.NotImplementedException;
 
 namespace TradeSecret.Enemy
 {
@@ -79,6 +80,8 @@ namespace TradeSecret.Enemy
         void OnExit();
 
         void OnHit(RaycastHit hit);
+        
+        void SetPlayer(GameObject gameObject);
     }
 
     public class EnemyStateIdle : EnemyState
@@ -111,6 +114,11 @@ namespace TradeSecret.Enemy
         public void OnHit(RaycastHit hit)
         {
             _raycastHit = hit;
+        }
+        
+        public void SetPlayer(GameObject gameObject)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -149,6 +157,11 @@ namespace TradeSecret.Enemy
         public void OnHit(RaycastHit hit)
         {
             _raycastHit = hit;
+        }
+        
+        public void SetPlayer(GameObject gameObject)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -197,39 +210,57 @@ namespace TradeSecret.Enemy
         {
             _raycastHit = hit;
         }
+        
+        public void SetPlayer(GameObject gameObject)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class EnemyStatePursue : EnemyState
     {
-        private readonly Animator animator;
-        private EnemyPatrol patrol;
+        // TODO: Finish Pursuit state
+        private readonly Animator _animator;
+        private EnemyPatrol _patrol;
         private RaycastHit _raycastHit;
+        private GameObject _player;
+        private float _oldSpeed;
 
 
-        public EnemyStatePursue(Animator animator, EnemyPatrol patrol)
+        public EnemyStatePursue(Animator animator, EnemyPatrol patrol, GameObject player)
         {
-            this.animator = animator;
-            this.patrol = patrol;
+            this._animator = animator;
+            this._patrol = patrol;
+            this._player = player;
+            this._oldSpeed = patrol.agent.speed;
         }
 
         public void OnEnter()
         {
-            animator.SetBool("isWalking", true);
+            _animator.SetBool("isWalking", true);
+            _patrol.agent.speed = 5.0F;
         }
 
         public void OnUpdate()
         {
-            animator.SetBool("isWalking", true);
+            _animator.SetBool("isWalking", true);
+            _patrol.agent.destination = _player.transform.position;
         }
 
         public void OnExit()
         {
-            animator.SetBool("isWalking", false);
+            _animator.SetBool("isWalking", false);
+            _patrol.agent.speed = _oldSpeed;
         }
-        
+
         public void OnHit(RaycastHit hit)
         {
             _raycastHit = hit;
+        }
+
+        public void SetPlayer(GameObject gameObject)
+        {
+            this._player = gameObject;
         }
     }
 }
