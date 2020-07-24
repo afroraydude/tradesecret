@@ -48,7 +48,8 @@ namespace TradeSecret.Enemy
             patrolling = false;
             if (agent.remainingDistance < minRemainingDistance)
                 currentPoint = destPoint;
-            destPoint = (destPoint + 1) % patrolPoints.Length;
+            if (patrolPoints.Length > 0)
+                destPoint = (destPoint + 1) % patrolPoints.Length;
             
             if (patrolPoints.Length == 0)
             {

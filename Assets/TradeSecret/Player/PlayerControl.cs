@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace TradeSecret.Player
 {
@@ -23,7 +25,7 @@ namespace TradeSecret.Player
 
             float speed = defaultSpeed;
 
-            
+            if (crouched) speed = defaultSpeed / 2;
 
             // Translation of stuff aka acceleration and speed
             float translationX = Input.GetAxis("Horizontal") * speed;
@@ -55,6 +57,14 @@ namespace TradeSecret.Player
             
             // Move player
             transform.Translate(translationX, 0, translationZ);
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                SceneManager.LoadScene("PreviewGameOver");
+            }
         }
     }
 }

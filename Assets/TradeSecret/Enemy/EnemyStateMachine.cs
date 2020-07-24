@@ -138,7 +138,8 @@ namespace TradeSecret.Enemy
         public void OnEnter()
         {
             animator.SetBool("isWalking", true);
-            patrol.agent.destination = patrol.patrolPoints[patrol.destPoint].position;
+            if (patrol.patrolPoints != null && patrol.patrolPoints.Length > 0)
+                patrol.agent.destination = patrol.patrolPoints[patrol.destPoint].position;
             Debug.Log(patrol.agent.remainingDistance);
         }
 
@@ -212,6 +213,7 @@ namespace TradeSecret.Enemy
         public void OnHit(RaycastHit hit)
         {
             _raycastHit = hit;
+            patrol.agent.destination = _raycastHit.point;
         }
         
         public void SetPlayer(GameObject gameObject)

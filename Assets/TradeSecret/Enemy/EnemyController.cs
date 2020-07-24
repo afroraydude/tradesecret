@@ -54,8 +54,8 @@ namespace TradeSecret.Enemy
             stateMachine = GetComponentInParent<EnemyStateMachine>();
 
             iStates.AddRange(new EnemyState[] { new EnemyStateIdle(enemyAnimator, enemyPatrol), new EnemyStatePatrol(enemyAnimator, enemyPatrol), new EnemyStateWarn(enemyAnimator, enemyPatrol), new EnemyStatePursue(enemyAnimator, enemyPatrol, player) });
-
-            stateMachine.SwitchState(iStates[(int) startState]);
+            if (enemyPatrol.patrolPoints.Length > 0)
+                stateMachine.SwitchState(iStates[(int) startState]);
             
         }
 
@@ -103,7 +103,6 @@ namespace TradeSecret.Enemy
         /// <param name="isPlayer"></param>
         public void OnRaycastHit(bool isPlayer)
         {
-
             
             if (isPlayer)
             {

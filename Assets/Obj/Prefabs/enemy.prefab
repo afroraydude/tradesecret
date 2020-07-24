@@ -482,7 +482,7 @@ GameObject:
   - component: {fileID: 2025753325568947073}
   m_Layer: 0
   m_Name: enemy
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -590,6 +590,7 @@ MonoBehaviour:
   enemyPatrol: {fileID: 0}
   enemyAnimator: {fileID: 0}
   stateMachine: {fileID: 0}
+  player: {fileID: 0}
   playerSeen: 0
   cooledDown: 1
   isChasing: 0
@@ -614,10 +615,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolling: 0
   autoBrake: 1
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
+  destPoint: 0
+  currentPoint: 0
   agent: {fileID: 0}
+  enemyAnimator: {fileID: 0}
   minRemainingDistance: 0.5
 --- !u!114 &3588873341307742804
 MonoBehaviour:

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace TradeSecret.SceneBased
 {
-    public class PreviewAlert : MonoBehaviour
+    public class PreviewLevelLoader : MonoBehaviour
     {
         [SerializeField] private Text play;
         public float timer;
@@ -30,7 +30,7 @@ namespace TradeSecret.SceneBased
                 }
                 else
                 {
-                    SceneManager.LoadScene("Menu");
+                    SceneManager.LoadScene("Test");
                 }
             }
 

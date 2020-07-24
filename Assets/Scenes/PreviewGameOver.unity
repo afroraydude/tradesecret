@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1875509607}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PreviewAlert, Assembly-CSharp
         m_MethodName: GoToLink
         m_Mode: 1
@@ -319,22 +319,13 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 100
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Welcome to the Trade Secret test level! Before you continue, I do have
-    some things to say.\n\n1. This is a VERY early pre-alpha. Things such as animations,
-    enemy AI, assets...basically everything, is subject to change. \n\n2.Theres a
-    Discord server: https://discord.gg/ZA6UbCb\n\n3. I made most of this concept
-    in less than a day's work, that includes models, animations, code, etc. Things
-    like the Enemy AI are very basic and will be expanded upon in later updates once
-    I truely figure out what I may want to do with them. This is just a proof of
-    concept!\n\n4. Controls are WASD to move, press C to toggle crouch (its a bit
-    glitchy), and press E to interact with an object.\n\n5. Any suggestions are greaty
-    appreciated! You can DM me or email me. \n\n6. I respond fastest to DMs."
+  m_Text: Thank you for playing!
 --- !u!222 &161644633
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -560,7 +551,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press any key
+  m_Text: Press any key to exit
 --- !u!222 &1423874042
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -679,8 +670,8 @@ GameObject:
   - component: {fileID: 1875509610}
   - component: {fileID: 1875509609}
   - component: {fileID: 1875509608}
-  - component: {fileID: 1875509607}
   - component: {fileID: 1875509611}
+  - component: {fileID: 1875509607}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -697,7 +688,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1875509606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 351b834002200fc40b62e76bf987f95a, type: 3}
+  m_Script: {fileID: 11500000, guid: 27c5144162d4fbb43ae44b875e3a7f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   play: {fileID: 1423874041}
