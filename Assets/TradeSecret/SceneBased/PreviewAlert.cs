@@ -18,9 +18,14 @@ public class PreviewAlert : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKeyDown)
-        {
-            SceneManager.LoadScene("Menu");
+        
+        if (Input.anyKeyDown) {
+            if (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.Mouse1)) {
+                return;
+            }
+            else {
+                SceneManager.LoadScene("Menu");
+            }
         }
         
         timer = timer + Time.deltaTime;
@@ -34,5 +39,10 @@ public class PreviewAlert : MonoBehaviour
             timer = 0;
         }
         
+    }
+
+    public static void GoToLink()
+    {
+        Application.OpenURL("https://blogs.unity3d.com/2018/11/06/performance-reporting-is-now-cloud-diagnostics/");
     }
 }

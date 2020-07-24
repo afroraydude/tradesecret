@@ -100,38 +100,42 @@ namespace TradeSecret.Enemy
         public void OnRaycastHit(bool isPlayer)
         {
 
-            if (isChasing)
-            {
-                stateMachine.SwitchState(iStates[(int) states.pursue]);
-                stateMachine.currentEnemyState.OnHit(hit);
-            }
-            if (!isChasing)
-            {
-                if (cooledDown)
-                {
-                    stateMachine.SwitchState(iStates[(int) startState]);
-                }
-                if (!cooledDown)
-                {
-                    stateMachine.SwitchState(iStates[(int)states.warn]);
-                }
-            }
+            
             if (isPlayer)
             {
-                if (!isChasing)
+                Debug.Log(stateMachine.currentEnemyState);
+                if (!isChasing && stateMachine.currentEnemyState != iStates[(int) states.warn])
                 {
                     stateMachine.SwitchState(iStates[(int)states.warn]);
-                    stateMachine.currentEnemyState.OnHit(hit);
                 }
                 if (playerSeen == false) 
                     scanStartTime = currentTime;
                 playerSeen = true;
                 cooledDown = false;
+                stateMachine.currentEnemyState.OnHit(hit);
+                Debug.Log(stateMachine.currentEnemyState);
             }
             else
             {
                 playerSeen = false;
-                stateMachine.SwitchToPreviousState();
+                if (isChasing && stateMachine.currentEnemyState != iStates[(int) states.pursue])
+                {
+                    stateMachine.SwitchState(iStates[(int) states.pursue]);
+                    //stateMachine.currentEnemyState.OnHit(hit);
+                }
+            
+                if (!isChasing)
+                {
+                    if (cooledDown  && stateMachine.currentEnemyState != iStates[(int) startState])
+                    {
+                        stateMachine.SwitchState(iStates[(int) startState]);
+                    }
+                    if (!cooledDown && stateMachine.currentEnemyState != iStates[(int) states.warn])
+                    {
+                        stateMachine.SwitchState(iStates[(int)states.warn]);
+                    }
+                }
+                //stateMachine.SwitchToPreviousState();
             }
         }
     }

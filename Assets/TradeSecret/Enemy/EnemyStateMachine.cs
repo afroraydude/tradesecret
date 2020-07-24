@@ -167,7 +167,7 @@ namespace TradeSecret.Enemy
         
         public void OnEnter()
         {
-            animator.SetBool("isWalking", true);
+            animator.SetBool("isWalking", false);
             patrol.agent.destination = _raycastHit.point;
         }
 
@@ -183,6 +183,7 @@ namespace TradeSecret.Enemy
             else
             {
                 animator.SetBool("isWalking", true);
+                animator.SetBool("isLooking", false);
             }
         }
 
