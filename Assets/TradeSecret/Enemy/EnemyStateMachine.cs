@@ -138,6 +138,8 @@ namespace TradeSecret.Enemy
         public void OnEnter()
         {
             animator.SetBool("isWalking", true);
+            patrol.agent.destination = patrol.patrolPoints[patrol.destPoint].position;
+            Debug.Log(patrol.agent.remainingDistance);
         }
 
         public void OnUpdate()
@@ -145,6 +147,7 @@ namespace TradeSecret.Enemy
             animator.SetBool("isWalking", true);
             if (patrol.agent.remainingDistance < patrol.minRemainingDistance)
             {
+                animator.SetBool("isWalking", false);
                 patrol.GoToNextPoint();
             }
         }

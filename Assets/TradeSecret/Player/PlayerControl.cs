@@ -23,8 +23,23 @@ namespace TradeSecret.Player
 
             float speed = defaultSpeed;
 
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) ||
-                Input.GetKey(KeyCode.D))
+            
+
+            // Translation of stuff aka acceleration and speed
+            float translationX = Input.GetAxis("Horizontal") * speed;
+            float translationZ = Input.GetAxis("Vertical") * speed;
+            
+            // Load velocity into move animations
+            anim.SetFloat("VelocityZ", translationZ);
+            anim.SetFloat("VelocityX", translationX);
+            
+            translationX *= Time.deltaTime;
+            translationZ *= Time.deltaTime;
+
+            
+            
+            // Begin move animations
+            if (translationX != 0.0 || translationZ != 0.0)
             {
                 anim.SetBool("Walking", true);
             }
@@ -37,15 +52,7 @@ namespace TradeSecret.Player
             {
                 crouched = !crouched;
             }
-
-            // Translation of stuff aka acceleration and speed
-            float translationX = Input.GetAxis("Horizontal") * speed;
-            anim.SetFloat("VelocityX", translationX);
-            float translationZ = Input.GetAxis("Vertical") * speed;
-            anim.SetFloat("VelocityZ", translationZ);
-            translationX *= Time.deltaTime;
-            translationZ *= Time.deltaTime;
-
+            
             // Move player
             transform.Translate(translationX, 0, translationZ);
         }
