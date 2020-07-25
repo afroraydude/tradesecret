@@ -48,9 +48,9 @@ namespace TradeSecret.SceneBased
 
         }
 
-        public static void GoToLink()
+        public static void GoToLink(string url)
         {
-            Application.OpenURL("https://blogs.unity3d.com/2018/11/06/performance-reporting-is-now-cloud-diagnostics/");
+            Application.OpenURL(url);
         }
     }
 }
