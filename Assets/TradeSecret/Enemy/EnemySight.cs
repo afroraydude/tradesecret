@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace TradeSecret.Enemy
 {
+    /// <summary>
+    /// Handles enemy "sight" and "hearing"
+    /// basically enemy passive interaction with other objects
+    /// </summary>
     public class EnemySight : MonoBehaviour
     {
         public Vector3 raycastPosition;
@@ -24,7 +28,8 @@ namespace TradeSecret.Enemy
         void Start()
         {
             enemyAnimator = GetComponentInParent<Animator>();
-            enemyHead = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:Neck").Find("mixamorig:Head");
+            enemyHead = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1")
+                .Find("mixamorig:Spine2").Find("mixamorig:Neck").Find("mixamorig:Head");
             //raycastPosition = enemyHead.transform.position;
             //raycastRotation = transform.rotation;
         }
@@ -43,7 +48,8 @@ namespace TradeSecret.Enemy
             raycastRotation = enemyHead.transform.rotation;
 
             RaycastHit hit;
-            // Does the ray intersect any objects excluding the player layer
+            
+            // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(Vector3.forward), out hit, 100))
             {
                 globalRaycast = hit;
@@ -61,9 +67,53 @@ namespace TradeSecret.Enemy
             else
             {
                 Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 100, Color.red);
-                gameObject.SendMessage("OnRaycastHit", false);
+                //gameObject.SendMessage("OnRaycastHit", false);
+            }
+            
+            //right raycast
+            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(1, 0, 1)), out hit, 100))
+            {
+                globalRaycast = hit;
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1, 0, 1)) * hit.distance, Color.yellow);
+                if (hit.collider.tag == "Player")
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", true);
+                } else
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", false);
+                }
+            }
+            else
+            {
+                Debug.DrawRay(raycastPosition, transform.TransformDirection(new Vector3(1, 0, 1)) * 100, Color.red);
+                //gameObject.SendMessage("OnRaycastHit", false);
+            }
+            
+            //left raycast
+            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(-1, 0, 1)), out hit, 100))
+            {
+                globalRaycast = hit;
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1, 0, 1)) * hit.distance, Color.yellow);
+                if (hit.collider.tag == "Player")
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", true);
+                } else
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", false);
+                }
+            }
+            else
+            {
+                Debug.DrawRay(raycastPosition, transform.TransformDirection(new Vector3(-1, 0, 1)) * 100, Color.red);
+                //gameObject.SendMessage("OnRaycastHit", false);
             }
         }
+        
+        
 
         public void OnSoundHeard(GameObject soundCreator)
         {
