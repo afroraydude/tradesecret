@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayVersion : MonoBehaviour
+namespace TradeSecret.UI
 {
-    private Text versionText;
-    // Start is called before the first frame update
-    void Start()
+    public class DisplayVersion : MonoBehaviour
     {
-        versionText = GetComponentInParent<Text>();
-        versionText.text = $"Pre-Alpha v{Application.version}";
-    }
+        private Text versionText;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Start is called before the first frame update
+        void Start()
+        {
+            versionText = GetComponentInParent<Text>();
+            versionText.text = $"Pre-Alpha v{Application.version}";
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

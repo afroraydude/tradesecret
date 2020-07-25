@@ -138,7 +138,7 @@ namespace TradeSecret.Enemy
         public void OnEnter()
         {
             animator.SetBool("isWalking", true);
-            if (patrol.patrolPoints != null && patrol.patrolPoints.Length > 0)
+            if (patrol.agent && patrol.patrolPoints != null && patrol.patrolPoints.Length > 0)
                 patrol.agent.destination = patrol.patrolPoints[patrol.destPoint].position;
             Debug.Log(patrol.agent.remainingDistance);
         }
@@ -237,6 +237,7 @@ namespace TradeSecret.Enemy
             this._animator = animator;
             this._patrol = patrol;
             this._player = player;
+            if (patrol.agent)
             this._oldSpeed = patrol.agent.speed;
         }
 

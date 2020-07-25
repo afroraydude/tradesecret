@@ -12,7 +12,7 @@ namespace TradeSecret.Enemy
 
         public bool patrolling = false;
         public bool autoBrake = true;
-        public Transform[] patrolPoints;
+        public Transform[] patrolPoints = new Transform[0];
         public int destPoint = 0;
         public int currentPoint = 0;
 
@@ -27,8 +27,12 @@ namespace TradeSecret.Enemy
             agent = GetComponentInParent<NavMeshAgent>();
 
             agent.autoBraking = autoBrake;
-
             enemyAnimator = GetComponentInParent<Animator>();
+            
+            if (patrolPoints.Length == 0)
+            {
+                patrolPoints = new Transform[] {this.transform};
+            }
         }
 
         // Start is called before the first frame update
@@ -46,25 +50,30 @@ namespace TradeSecret.Enemy
         public void GoToNextPoint()
         {
             patrolling = false;
-            if (agent.remainingDistance < minRemainingDistance)
-                currentPoint = destPoint;
+
             if (patrolPoints.Length > 0)
+            {
+                Debug.Log("Thisisdone");
+                if (agent.remainingDistance < minRemainingDistance)
+                    currentPoint = destPoint;
+                
                 destPoint = (destPoint + 1) % patrolPoints.Length;
+                
+                if (patrolPoints[currentPoint].CompareTag("PatrolPoint_Look") && !enemyAnimator.GetBool("isWalking"))
+                {
+                    StartCoroutine(LookThenGo());
+                }
             
+                else
+                {
+                    patrolling = true;
+                    agent.destination = patrolPoints[destPoint].position;
+                }
+            }
+
             if (patrolPoints.Length == 0)
             {
                 return;
-            }
-
-            if (patrolPoints[currentPoint].CompareTag("PatrolPoint_Look") && !enemyAnimator.GetBool("isWalking"))
-            {
-                StartCoroutine(LookThenGo());
-            }
-            
-            else
-            {
-                patrolling = true;
-                agent.destination = patrolPoints[destPoint].position;
             }
         }
 

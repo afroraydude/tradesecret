@@ -12,6 +12,8 @@ namespace TradeSecret.Player
         public float defaultSpeed = 10.0f;
         public bool crouched = false;
 
+        public float rotationSpeed = 25.0f;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -54,8 +56,13 @@ namespace TradeSecret.Player
             {
                 crouched = !crouched;
             }
-            
-            // Move player
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.Rotate(Quaternion.Euler(0, -rotationSpeed * Time.deltaTime, 0).eulerAngles);
+            }
+
+                // Move player
             transform.Translate(translationX, 0, translationZ);
         }
 

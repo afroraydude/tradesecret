@@ -52,16 +52,15 @@ namespace TradeSecret.Enemy
             enemyPatrol = GetComponentInParent<EnemyPatrol>();
             enemyAnimator = GetComponentInParent<Animator>();
             stateMachine = GetComponentInParent<EnemyStateMachine>();
-
-            iStates.AddRange(new EnemyState[] { new EnemyStateIdle(enemyAnimator, enemyPatrol), new EnemyStatePatrol(enemyAnimator, enemyPatrol), new EnemyStateWarn(enemyAnimator, enemyPatrol), new EnemyStatePursue(enemyAnimator, enemyPatrol, player) });
-            if (enemyPatrol.patrolPoints.Length > 0)
-                stateMachine.SwitchState(iStates[(int) startState]);
             
-        }
+            }
 
         void Start()
         {
+            iStates.AddRange(new EnemyState[] { new EnemyStateIdle(enemyAnimator, enemyPatrol), new EnemyStatePatrol(enemyAnimator, enemyPatrol), new EnemyStateWarn(enemyAnimator, enemyPatrol), new EnemyStatePursue(enemyAnimator, enemyPatrol, player) });
 
+            if (enemyPatrol.patrolPoints.Length > 0)
+                stateMachine.SwitchState(iStates[(int) startState]);
         }
 
         void Update()
@@ -130,13 +129,17 @@ namespace TradeSecret.Enemy
             
                 if (!isChasing)
                 {
-                    if (cooledDown  && stateMachine.GetCurrentState() != iStates[(int) startState])
+                    if (iStates.Count > 0)
                     {
-                        stateMachine.SwitchState(iStates[(int) startState]);
-                    }
-                    if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
-                    {
-                        stateMachine.SwitchState(iStates[(int)States.Warn]);
+                        if (cooledDown && stateMachine.GetCurrentState() != iStates[(int) startState])
+                        {
+                            stateMachine.SwitchState(iStates[(int) startState]);
+                        }
+
+                        if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                        {
+                            stateMachine.SwitchState(iStates[(int) States.Warn]);
+                        }
                     }
                 }
                 //stateMachine.SwitchToPreviousState();

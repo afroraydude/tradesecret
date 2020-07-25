@@ -16,15 +16,15 @@ namespace TradeSecret.Enemy
 
         private void Awake()
         {
-            enemyAnimator = GetComponentInParent<Animator>();
-            enemyHead = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:Neck").Find("mixamorig:Head");
+            
             //enemyHead = enemyAnimator.GetBoneTransform()
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            
+            enemyAnimator = GetComponentInParent<Animator>();
+            enemyHead = transform.Find("mixamorig:Hips").Find("mixamorig:Spine").Find("mixamorig:Spine1").Find("mixamorig:Spine2").Find("mixamorig:Neck").Find("mixamorig:Head");
             //raycastPosition = enemyHead.transform.position;
             //raycastRotation = transform.rotation;
         }
