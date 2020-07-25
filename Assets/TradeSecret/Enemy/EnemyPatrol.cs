@@ -53,7 +53,7 @@ namespace TradeSecret.Enemy
 
             if (patrolPoints.Length > 0)
             {
-                Debug.Log("Thisisdone");
+
                 if (agent.remainingDistance < minRemainingDistance)
                     currentPoint = destPoint;
                 

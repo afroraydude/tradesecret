@@ -31,7 +31,6 @@ namespace TradeSecret.SceneBased
             if (other.CompareTag("Player"))
             {
                 _playerIsHere = true;
-                Debug.Log("Player enter");
             }
         }
 
@@ -40,7 +39,7 @@ namespace TradeSecret.SceneBased
             if (other.CompareTag("Player"))
             {
                 _playerIsHere = false;
-                Debug.Log("Player exit");
+
             }
         }
     }

@@ -83,13 +83,13 @@ namespace TradeSecret.Enemy
 
             if (playerSeen && (currentTime - scanStartTime) > timeUntilChase && !isChasing)
             {
-                Debug.Log(gameObject.name + ": " + "Begin chase!");
+
                 stateMachine.SwitchState(iStates[(int) States.Pursue]);
                 isChasing = true;
                 cooledDown = false;
             } else if (!playerSeen && (currentTime - cooldownStartTime) > timeUntilCooldown && !cooledDown)
             {
-                Debug.Log(gameObject.name + ": " + "Cooled down!");
+
                 isChasing = false;
                 cooledDown = true;
                 stateMachine.SwitchState(iStates[(int) startState]);
@@ -105,7 +105,7 @@ namespace TradeSecret.Enemy
             
             if (isPlayer)
             {
-                Debug.Log(gameObject.name + ": " + stateMachine.GetCurrentState());
+
                 if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
                 {
                     stateMachine.SwitchState(iStates[(int)States.Warn]);
@@ -115,7 +115,7 @@ namespace TradeSecret.Enemy
                 playerSeen = true;
                 cooledDown = false;
                 stateMachine.GetCurrentState().OnHit(_hit);
-                Debug.Log(gameObject.name + ": " + stateMachine.GetCurrentState());
+
             }
             else
             {

@@ -48,21 +48,19 @@ namespace TradeSecret.Enemy
             {
                 globalRaycast = hit;
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                Debug.Log("Did Hit");
                 if (hit.collider.tag == "Player")
                 {
-                    Debug.Log("is player");
+
                     gameObject.SendMessage("OnRaycastHit", true);
                 } else
                 {
-                    Debug.Log("not player");
+
                     gameObject.SendMessage("OnRaycastHit", false);
                 }
             }
             else
             {
                 Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 100, Color.red);
-                Debug.Log("Did not Hit");
                 gameObject.SendMessage("OnRaycastHit", false);
             }
         }

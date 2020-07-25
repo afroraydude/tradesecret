@@ -140,7 +140,7 @@ namespace TradeSecret.Enemy
             animator.SetBool("isWalking", true);
             if (patrol.agent && patrol.patrolPoints != null && patrol.patrolPoints.Length > 0)
                 patrol.agent.destination = patrol.patrolPoints[patrol.destPoint].position;
-            Debug.Log(patrol.agent.remainingDistance);
+
         }
 
         public void OnUpdate()
@@ -193,7 +193,7 @@ namespace TradeSecret.Enemy
             
             if (patrol.agent.remainingDistance < 0.5)
             {
-                Debug.Log("At point");
+
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isLooking", true);
             }
