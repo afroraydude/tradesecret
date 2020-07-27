@@ -16,7 +16,7 @@ namespace TradeSecret.Enemy
         public Quaternion raycastRotation;
         public Transform enemyHead;
         public Animator enemyAnimator;
-        public RaycastHit globalRaycast;
+        public Vector3 globalRaycast;
 
         private void Awake()
         {
@@ -57,7 +57,7 @@ namespace TradeSecret.Enemy
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(Vector3.forward), out hit, 100))
             {
-                globalRaycast = hit;
+                globalRaycast = hit.point;
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 if (hit.collider.tag == "Player")
                 {
@@ -83,7 +83,7 @@ namespace TradeSecret.Enemy
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(1f,0f,1f)), out hit, 100))
             {
-                globalRaycast = hit;
+                globalRaycast = hit.point;
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1f,0f,1f)) * hit.distance, Color.green);
                 if (hit.collider.tag == "Player")
                 {
@@ -109,7 +109,7 @@ namespace TradeSecret.Enemy
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)), out hit, 100))
             {
-                globalRaycast = hit;
+                globalRaycast = hit.point;
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)) * hit.distance, Color.cyan);
                 if (hit.collider.tag == "Player")
                 {
@@ -130,7 +130,7 @@ namespace TradeSecret.Enemy
 
         public void OnSoundHeard(GameObject soundCreator)
         {
-            
+            Debug.Log("sound heard");
         } 
     }
 }

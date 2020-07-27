@@ -6,30 +6,27 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menus/PreviewAlert.unity
-    guid: a5c38f8a3ea2f06418e63561b6c93426
+    path: Assets/Scenes/Menus/LoadingScreen.unity
+    guid: 6a383bd318da549bcbacb4e01d368ddb
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Scenes/Menus/Menu.unity
     guid: 838746b6cda684752b52e2f6ca7f3bd2
+  - enabled: 1
+    path: Assets/Scenes/Menus/Options.unity
+    guid: ef197cc50050d473c889e8b8b01a9559
   - enabled: 1
     path: Assets/Scenes/Preview/ObjectTest.unity
     guid: 0bbb819cd758c45a6a4809d40aff13b3
   - enabled: 1
-    path: Assets/Scenes/Levels/Test.unity
-    guid: 89a64f54889b00345b5c48112ed15388
+    path: Assets/Scenes/Preview/PreviewAlert.unity
+    guid: a5c38f8a3ea2f06418e63561b6c93426
   - enabled: 1
-    path: Assets/Scenes/Menus/PreviewGameOver.unity
+    path: Assets/Scenes/Preview/PreviewGameOver.unity
     guid: ff334ef710a3c054a826ad262b83310b
   - enabled: 1
-    path: Assets/Scenes/Menus/LoadingScreen.unity
-    guid: 6a383bd318da549bcbacb4e01d368ddb
-  - enabled: 1
-    path: Assets/Scenes/Options.unity
-    guid: ef197cc50050d473c889e8b8b01a9559
-  - enabled: 1
-    path: Assets/Scenes/Menus/PreviewLevelLoader.unity
+    path: Assets/Scenes/Preview/PreviewLevelLoader.unity
     guid: a8ef37e95f9422c429556c5f5b082bf9
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Preview/Test.unity
+    guid: 89a64f54889b00345b5c48112ed15388
   m_configObjects: {}

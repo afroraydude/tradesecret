@@ -56,7 +56,7 @@ namespace TradeSecret.Enemy
             return currentEnemyState;
         }
 
-        public void SetHit(RaycastHit hit)
+        public void SetHit(Vector3 hit)
         {
             this.currentEnemyState.OnHit(hit);
         }
@@ -79,7 +79,7 @@ namespace TradeSecret.Enemy
         /// </summary>
         void OnExit();
 
-        void OnHit(RaycastHit hit);
+        void OnHit(Vector3 hit);
         
         void SetPlayer(GameObject gameObject);
     }
@@ -88,7 +88,7 @@ namespace TradeSecret.Enemy
     {
         private readonly Animator animator;
         private EnemyPatrol patrol;
-        private RaycastHit _raycastHit;
+        private Vector3 _raycastHit;
 
 
         public EnemyStateIdle(Animator animator, EnemyPatrol patrol)
@@ -111,7 +111,7 @@ namespace TradeSecret.Enemy
             animator.SetBool("isWalking", false);
         }
 
-        public void OnHit(RaycastHit hit)
+        public void OnHit(Vector3 hit)
         {
             _raycastHit = hit;
         }
@@ -126,7 +126,7 @@ namespace TradeSecret.Enemy
     {
         private readonly Animator animator;
         private EnemyPatrol patrol;
-        private RaycastHit _raycastHit;
+        private Vector3 _raycastHit;
 
 
         public EnemyStatePatrol(Animator animator, EnemyPatrol patrol)
@@ -158,7 +158,7 @@ namespace TradeSecret.Enemy
             animator.SetBool("isWalking", false);
         }
         
-        public void OnHit(RaycastHit hit)
+        public void OnHit(Vector3 hit)
         {
             _raycastHit = hit;
         }
@@ -173,7 +173,7 @@ namespace TradeSecret.Enemy
     {
         private readonly Animator animator;
         private EnemyPatrol patrol;
-        private RaycastHit _raycastHit;
+        private Vector3 _raycastHit;
 
 
         public EnemyStateWarn(Animator animator, EnemyPatrol patrol)
@@ -185,7 +185,7 @@ namespace TradeSecret.Enemy
         public void OnEnter()
         {
             animator.SetBool("isWalking", false);
-            patrol.agent.destination = _raycastHit.point;
+            patrol.agent.destination = _raycastHit;
         }
 
         public void OnUpdate()
@@ -210,10 +210,10 @@ namespace TradeSecret.Enemy
             animator.SetBool("isLooking", false);
         }
         
-        public void OnHit(RaycastHit hit)
+        public void OnHit(Vector3 hit)
         {
             _raycastHit = hit;
-            patrol.agent.destination = _raycastHit.point;
+            patrol.agent.destination = _raycastHit;
         }
         
         public void SetPlayer(GameObject gameObject)
@@ -227,7 +227,7 @@ namespace TradeSecret.Enemy
         // TODO: Finish Pursuit state
         private readonly Animator _animator;
         private EnemyPatrol _patrol;
-        private RaycastHit _raycastHit;
+        private Vector3 _raycastHit;
         private GameObject _player;
         private float _oldSpeed;
 
@@ -259,7 +259,7 @@ namespace TradeSecret.Enemy
             _patrol.agent.speed = _oldSpeed;
         }
 
-        public void OnHit(RaycastHit hit)
+        public void OnHit(Vector3 hit)
         {
             _raycastHit = hit;
         }

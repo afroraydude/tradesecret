@@ -11,6 +11,9 @@ namespace TradeSecret.Player
         public Animator anim;
         public float defaultSpeed = 10.0f;
         public bool crouched = false;
+        public bool isWalking = false;
+
+        [SerializeField] private float walkRadius = 10.0f;
 
         public float rotationSpeed = 25.0f;
 
@@ -24,6 +27,9 @@ namespace TradeSecret.Player
         void Update()
         {
             anim.SetBool("Crouched", crouched);
+
+            if (crouched) walkRadius = 2.5f;
+            else walkRadius = 5f;
 
             float speed = defaultSpeed;
 
@@ -45,12 +51,14 @@ namespace TradeSecret.Player
             // Begin move animations
             if (translationX != 0.0 || translationZ != 0.0)
             {
-                anim.SetBool("Walking", true);
+                isWalking = true;
             }
             else
             {
-                anim.SetBool("Walking", false);
+                isWalking = false;
+                
             }
+            anim.SetBool("Walking", isWalking);
 
             if (Input.GetKey(KeyCode.C))
             {
@@ -74,5 +82,22 @@ namespace TradeSecret.Player
                 SceneManager.LoadScene("PreviewGameOver");
             }
         }
+        
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            if (isWalking) Gizmos.DrawWireSphere (transform.position, walkRadius);
+        }
+
+        private void GenerateSound()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, walkRadius);
+
+            foreach (Collider hitCollider in hitColliders)
+            {
+                hitCollider.gameObject.SendMessage("OnSoundHeard", gameObject);
+            }
+        }
+
     }
 }

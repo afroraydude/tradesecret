@@ -28,7 +28,7 @@ namespace TradeSecret.Enemy
         [SerializeField] private float cooldownStartTime;
         [SerializeField] private float timeUntilCooldown = 10;
 
-        private RaycastHit _hit;
+        private Vector3 _hit;
 
         private enum States
         {
