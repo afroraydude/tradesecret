@@ -102,47 +102,51 @@ namespace TradeSecret.Enemy
         /// <param name="isPlayer"></param>
         public void OnRaycastHit(bool isPlayer)
         {
-            
-            if (isPlayer)
+            if (iStates.Count > 0)
             {
+                if (isPlayer)
+                {
 
-                if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
-                {
-                    stateMachine.SwitchState(iStates[(int)States.Warn]);
-                }
-                if (playerSeen == false) 
-                    scanStartTime = currentTime;
-                playerSeen = true;
-                cooledDown = false;
-                stateMachine.GetCurrentState().OnHit(_hit);
-
-            }
-            else
-            {
-                playerSeen = false;
-                if (isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Pursue])
-                {
-                    stateMachine.SwitchState(iStates[(int) States.Pursue]);
-                    stateMachine.GetCurrentState().SetPlayer(player);
-                    //stateMachine.GetCurrentState().OnHit(hit);
-                }
-            
-                if (!isChasing)
-                {
-                    if (iStates.Count > 0)
+                    if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
                     {
-                        if (cooledDown && stateMachine.GetCurrentState() != iStates[(int) startState])
-                        {
-                            stateMachine.SwitchState(iStates[(int) startState]);
-                        }
+                        stateMachine.SwitchState(iStates[(int) States.Warn]);
+                    }
 
-                        if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                    if (playerSeen == false)
+                        scanStartTime = currentTime;
+                    playerSeen = true;
+                    cooledDown = false;
+                    stateMachine.GetCurrentState().OnHit(_hit);
+
+                }
+                else
+                {
+                    playerSeen = false;
+                    if (isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Pursue])
+                    {
+                        stateMachine.SwitchState(iStates[(int) States.Pursue]);
+                        stateMachine.GetCurrentState().SetPlayer(player);
+                        //stateMachine.GetCurrentState().OnHit(hit);
+                    }
+
+                    if (!isChasing)
+                    {
+                        if (iStates.Count > 0)
                         {
-                            stateMachine.SwitchState(iStates[(int) States.Warn]);
+                            if (cooledDown && stateMachine.GetCurrentState() != iStates[(int) startState])
+                            {
+                                stateMachine.SwitchState(iStates[(int) startState]);
+                            }
+
+                            if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                            {
+                                stateMachine.SwitchState(iStates[(int) States.Warn]);
+                            }
                         }
                     }
+
+                    //stateMachine.SwitchToPreviousState();
                 }
-                //stateMachine.SwitchToPreviousState();
             }
         }
     }

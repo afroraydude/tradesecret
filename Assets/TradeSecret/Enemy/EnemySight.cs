@@ -42,11 +42,16 @@ namespace TradeSecret.Enemy
 
         void FixedUpdate()
         {
-            
-
             raycastPosition = enemyHead.transform.position;
             raycastRotation = enemyHead.transform.rotation;
+            
+            GenerateFrontSpherecast();
+            GenerateRightRaycast();
+            GenerateLeftRaycast();
+        }
 
+        void GenerateFrontSpherecast()
+        {
             RaycastHit hit;
             
             // forward raycast
@@ -66,54 +71,62 @@ namespace TradeSecret.Enemy
             }
             else
             {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(Vector3.forward) * 100, Color.red);
-                //gameObject.SendMessage("OnRaycastHit", false);
-            }
-            
-            //right raycast
-            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(1, 0, 1)), out hit, 100))
-            {
-                globalRaycast = hit;
-                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1, 0, 1)) * hit.distance, Color.yellow);
-                if (hit.collider.tag == "Player")
-                {
-
-                    gameObject.SendMessage("OnRaycastHit", true);
-                } else
-                {
-
-                    gameObject.SendMessage("OnRaycastHit", false);
-                }
-            }
-            else
-            {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(new Vector3(1, 0, 1)) * 100, Color.red);
-                //gameObject.SendMessage("OnRaycastHit", false);
-            }
-            
-            //left raycast
-            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(-1, 0, 1)), out hit, 100))
-            {
-                globalRaycast = hit;
-                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1, 0, 1)) * hit.distance, Color.yellow);
-                if (hit.collider.tag == "Player")
-                {
-
-                    gameObject.SendMessage("OnRaycastHit", true);
-                } else
-                {
-
-                    gameObject.SendMessage("OnRaycastHit", false);
-                }
-            }
-            else
-            {
-                Debug.DrawRay(raycastPosition, transform.TransformDirection(new Vector3(-1, 0, 1)) * 100, Color.red);
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(Vector3.forward) * 100, Color.red);
                 //gameObject.SendMessage("OnRaycastHit", false);
             }
         }
         
+        void GenerateRightRaycast()
+        {
+            RaycastHit hit;
+            
+            // forward raycast
+            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(1f,0f,1f)), out hit, 100))
+            {
+                globalRaycast = hit;
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1f,0f,1f)) * hit.distance, Color.green);
+                if (hit.collider.tag == "Player")
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", true);
+                } else
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", false);
+                }
+            }
+            else
+            {
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1f,0f,1f)) * 100, Color.blue);
+                //gameObject.SendMessage("OnRaycastHit", false);
+            }
+        }
         
+        void GenerateLeftRaycast()
+        {
+            RaycastHit hit;
+            
+            // forward raycast
+            if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)), out hit, 100))
+            {
+                globalRaycast = hit;
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)) * hit.distance, Color.cyan);
+                if (hit.collider.tag == "Player")
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", true);
+                } else
+                {
+
+                    gameObject.SendMessage("OnRaycastHit", false);
+                }
+            }
+            else
+            {
+                Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)) * 100, Color.magenta);
+                //gameObject.SendMessage("OnRaycastHit", false);
+            }
+        }
 
         public void OnSoundHeard(GameObject soundCreator)
         {
