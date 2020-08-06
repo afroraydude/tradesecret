@@ -57,11 +57,11 @@ namespace TradeSecret.Enemy
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(Vector3.forward), out hit, 100))
             {
-                globalRaycast = hit.point;
+                
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
                 if (hit.collider.tag == "Player")
                 {
-
+                    globalRaycast = hit.collider.gameObject.transform.position;
                     gameObject.SendMessage("OnRaycastHit", true);
                 } else
                 {
@@ -83,11 +83,10 @@ namespace TradeSecret.Enemy
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(1f,0f,1f)), out hit, 100))
             {
-                globalRaycast = hit.point;
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1f,0f,1f)) * hit.distance, Color.green);
                 if (hit.collider.tag == "Player")
                 {
-
+                    globalRaycast = hit.collider.gameObject.transform.position;
                     gameObject.SendMessage("OnRaycastHit", true);
                 } else
                 {
@@ -109,11 +108,11 @@ namespace TradeSecret.Enemy
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)), out hit, 100))
             {
-                globalRaycast = hit.point;
+                
                 Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)) * hit.distance, Color.cyan);
                 if (hit.collider.tag == "Player")
                 {
-
+                    globalRaycast = hit.collider.gameObject.transform.position;
                     gameObject.SendMessage("OnRaycastHit", true);
                 } else
                 {

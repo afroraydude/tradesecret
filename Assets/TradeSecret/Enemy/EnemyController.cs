@@ -75,7 +75,7 @@ namespace TradeSecret.Enemy
             {
                 cooldownStartTime = currentTime;
             }
-            
+
             if (!playerSeen)
             {
                 scanStartTime = currentTime;
