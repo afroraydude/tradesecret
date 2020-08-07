@@ -63,6 +63,7 @@ namespace TradeSecret.Enemy
 
             if (enemyPatrol.patrolPoints.Length > 0)
                 stateMachine.SwitchState(iStates[(int) startState]);
+            _hit = enemySight.globalRaycast;
         }
 
         void Update()
@@ -70,8 +71,7 @@ namespace TradeSecret.Enemy
             debugCurrentState = (States)iStates.IndexOf(stateMachine.GetCurrentState());
             
             currentTime += Time.deltaTime;
-            _hit = enemySight.globalRaycast;
-            
+
             if (playerSeen)
             {
                 cooldownStartTime = currentTime;
@@ -106,6 +106,7 @@ namespace TradeSecret.Enemy
         {
             if (isPlayer)
             {
+                _hit = enemySight.globalRaycast;
                 //(gameObject.name + ": " + stateMachine.GetCurrentState());
                 if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
                 {
@@ -152,5 +153,18 @@ namespace TradeSecret.Enemy
                 //stateMachine.SwitchToPreviousState();
             }
         }
+        
+        public void OnSoundHeard(Vector3 soundPosition)
+        {
+            _hit = soundPosition;
+            if (stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                {
+                    Debug.Log("Sound heard");
+                    stateMachine.SwitchState(iStates[(int) States.Warn]);
+                    playerSeen = true;
+                    cooledDown = false;
+                    stateMachine.GetCurrentState().OnHit(_hit);
+                }
+        } 
     }
 }

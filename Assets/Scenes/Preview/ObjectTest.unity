@@ -1634,6 +1634,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1234309432}
+    - target: {fileID: 6078603395177328129, guid: ce78c5af39c31ab4c900dc1a08b6bbe5,
+        type: 3}
+      propertyPath: startState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6433735279505378500, guid: ce78c5af39c31ab4c900dc1a08b6bbe5,
         type: 3}
       propertyPath: patrolPoints.Array.data[0]

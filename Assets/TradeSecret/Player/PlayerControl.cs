@@ -75,6 +75,11 @@ namespace TradeSecret.Player
             transform.Translate(translationX, 0, translationZ);
         }
 
+        private void FixedUpdate()
+        {
+            //GenerateSound();
+        }
+
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Enemy"))
@@ -83,21 +88,21 @@ namespace TradeSecret.Player
             }
         }
         
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.red;
-            if (isWalking) Gizmos.DrawWireSphere (transform.position, walkRadius);
-        }
-
+        /**
         private void GenerateSound()
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, walkRadius);
 
             foreach (Collider hitCollider in hitColliders)
             {
-                hitCollider.gameObject.SendMessage("OnSoundHeard", gameObject);
+                Debug.Log($"Hit {hitCollider.gameObject.name}");
+                if (hitCollider.CompareTag("Enemy"))
+                {
+                    hitCollider.gameObject.SendMessage("OnSoundHeard", gameObject);
+                }
+                
             }
         }
-
+        */
     }
 }

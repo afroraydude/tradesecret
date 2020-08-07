@@ -69,6 +69,10 @@ namespace TradeSecret.Enemy
                     globalRaycast = hit.collider.gameObject.transform.position;
                     playerHit = true;
                 }
+                else
+                {
+                    Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(Vector3.forward) * 100, Color.red);
+                }
             }
             else
             {
@@ -89,7 +93,11 @@ namespace TradeSecret.Enemy
                 {
                     globalRaycast = hit.collider.gameObject.transform.position;
                     playerHit = true;
-                } 
+                }
+                else
+                {
+                    Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(1f,0f,1f)) * 100, Color.blue);
+                }
             }
             else
             {
@@ -111,7 +119,11 @@ namespace TradeSecret.Enemy
                 {
                     globalRaycast = hit.collider.gameObject.transform.position;
                     playerHit = true;
-                } 
+                }
+                else
+                {
+                    Debug.DrawRay(raycastPosition, enemyHead.TransformDirection(new Vector3(-1f,0f,1f)) * 100, Color.magenta);
+                }
             }
             else
             {
@@ -119,10 +131,5 @@ namespace TradeSecret.Enemy
                 //gameObject.SendMessage("OnRaycastHit", false);
             }
         }
-
-        public void OnSoundHeard(GameObject soundCreator)
-        {
-            Debug.Log("sound heard");
-        } 
     }
 }
