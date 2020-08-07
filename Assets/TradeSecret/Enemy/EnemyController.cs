@@ -14,11 +14,11 @@ namespace TradeSecret.Enemy
         public EnemyStateMachine stateMachine;
         public GameObject player;
 
-        [SerializeField] private bool playerSeen = false;
+        [SerializeField] private bool playerSeen;
         [SerializeField] private bool cooledDown = true;
         [FormerlySerializedAs("chaseBegun")] [SerializeField] private bool isChasing = false;
-        [SerializeField] private bool chaseTimerRunning = false;
-        [SerializeField] private bool cooldownTimerRunning = false;
+        [SerializeField] private bool chaseTimerRunning;
+        [SerializeField] private bool cooldownTimerRunning;
 
         
         [SerializeField] private float currentTime;
