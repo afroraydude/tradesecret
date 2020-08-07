@@ -17,11 +17,13 @@ namespace TradeSecret.Enemy
         [SerializeField] private bool playerSeen = false;
         [SerializeField] private bool cooledDown = true;
         [FormerlySerializedAs("chaseBegun")] [SerializeField] private bool isChasing = false;
+        [SerializeField] private bool chaseTimerRunning = false;
+        [SerializeField] private bool cooldownTimerRunning = false;
 
         
         [SerializeField] private float currentTime;
         
-        [SerializeField] private float scanStartTime;
+        [FormerlySerializedAs("scanStartTime")] [SerializeField] private float chaseStartTime;
         [SerializeField] private float timeUntilChase = 2;
         
         // cooldown
@@ -66,34 +68,36 @@ namespace TradeSecret.Enemy
         void Update()
         {
             debugCurrentState = (States)iStates.IndexOf(stateMachine.GetCurrentState());
-            stateMachine.ExecuteStateUpdate();
             
             currentTime += Time.deltaTime;
             _hit = enemySight.globalRaycast;
-
+            
             if (playerSeen)
             {
                 cooldownStartTime = currentTime;
             }
-
+            
             if (!playerSeen)
             {
-                scanStartTime = currentTime;
+                //Debug.Log("resetting chase timer 1");
+                chaseStartTime = currentTime;
             }
 
-            if (playerSeen && (currentTime - scanStartTime) > timeUntilChase && !isChasing)
+            if (playerSeen && (currentTime - chaseStartTime) > timeUntilChase && !isChasing)
             {
-
+                Debug.Log(gameObject.name + ": " + "Begin chase!");
                 stateMachine.SwitchState(iStates[(int) States.Pursue]);
                 isChasing = true;
                 cooledDown = false;
             } else if (!playerSeen && (currentTime - cooldownStartTime) > timeUntilCooldown && !cooledDown)
             {
-
+                Debug.Log(gameObject.name + ": " + "Cooled down!");
                 isChasing = false;
                 cooledDown = true;
                 stateMachine.SwitchState(iStates[(int) startState]);
             }
+            
+            stateMachine.ExecuteStateUpdate();
         }
 
         /// <summary>
@@ -102,51 +106,53 @@ namespace TradeSecret.Enemy
         /// <param name="isPlayer"></param>
         public void OnRaycastHit(bool isPlayer)
         {
-            if (iStates.Count > 0)
+            Debug.Log($"Player seen: {isPlayer}");
+            if (isPlayer)
             {
-                if (isPlayer)
+                //Debug.Log(gameObject.name + ": " + stateMachine.GetCurrentState());
+                if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
                 {
-
-                    if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
-                    {
-                        stateMachine.SwitchState(iStates[(int) States.Warn]);
-                    }
-
-                    if (playerSeen == false)
-                        scanStartTime = currentTime;
-                    playerSeen = true;
-                    cooledDown = false;
-                    stateMachine.GetCurrentState().OnHit(_hit);
-
+                    stateMachine.SwitchState(iStates[(int)States.Warn]);
                 }
-                else
+
+                if (!playerSeen)
                 {
-                    playerSeen = false;
-                    if (isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Pursue])
-                    {
-                        stateMachine.SwitchState(iStates[(int) States.Pursue]);
-                        stateMachine.GetCurrentState().SetPlayer(player);
-                        //stateMachine.GetCurrentState().OnHit(hit);
-                    }
+                    //Debug.Log("resetting chase timer 2");
+                    chaseStartTime = currentTime;
+                }
 
-                    if (!isChasing)
+                playerSeen = true;
+                cooledDown = false;
+                stateMachine.GetCurrentState().OnHit(_hit);
+                //Debug.Log(gameObject.name + ": " + stateMachine.GetCurrentState());
+            }
+            else
+            {
+                //.Log("Player not seen");
+                playerSeen = false;
+                if (isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Pursue])
+                {
+                    stateMachine.SwitchState(iStates[(int) States.Pursue]);
+                    stateMachine.GetCurrentState().SetPlayer(player);
+                    //stateMachine.GetCurrentState().OnHit(hit);
+                }
+            
+                if (!isChasing)
+                {
+                    if (iStates.Count > 0)
                     {
-                        if (iStates.Count > 0)
+                        if (cooledDown && stateMachine.GetCurrentState() != iStates[(int) startState])
                         {
-                            if (cooledDown && stateMachine.GetCurrentState() != iStates[(int) startState])
-                            {
-                                stateMachine.SwitchState(iStates[(int) startState]);
-                            }
+                            stateMachine.SwitchState(iStates[(int) startState]);
+                        }
 
-                            if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
-                            {
-                                stateMachine.SwitchState(iStates[(int) States.Warn]);
-                            }
+                        if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                        {
+                            stateMachine.SwitchState(iStates[(int) States.Warn]);
                         }
                     }
-
-                    //stateMachine.SwitchToPreviousState();
                 }
+                //stateMachine.SwitchToPreviousState();
             }
         }
     }
