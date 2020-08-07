@@ -45,6 +45,8 @@ namespace TradeSecret.Enemy
         {
             raycastPosition = enemyHead.transform.position;
             raycastRotation = enemyHead.transform.rotation;
+
+            playerHit = false;
             
             GenerateFrontSpherecast();
             GenerateRightRaycast();
@@ -78,7 +80,7 @@ namespace TradeSecret.Enemy
         void GenerateRightRaycast()
         {
             RaycastHit hit;
-            
+
             // forward raycast
             if (Physics.SphereCast(raycastPosition, 0.25f, enemyHead.TransformDirection(new Vector3(1f,0f,1f)), out hit, 100))
             {

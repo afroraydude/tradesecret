@@ -85,13 +85,11 @@ namespace TradeSecret.Enemy
 
             if (playerSeen && (currentTime - chaseStartTime) > timeUntilChase && !isChasing)
             {
-                (gameObject.name + ": " + "Begin chase!");
                 stateMachine.SwitchState(iStates[(int) States.Pursue]);
                 isChasing = true;
                 cooledDown = false;
             } else if (!playerSeen && (currentTime - cooldownStartTime) > timeUntilCooldown && !cooledDown)
             {
-                (gameObject.name + ": " + "Cooled down!");
                 isChasing = false;
                 cooledDown = true;
                 stateMachine.SwitchState(iStates[(int) startState]);
@@ -106,7 +104,6 @@ namespace TradeSecret.Enemy
         /// <param name="isPlayer"></param>
         public void OnRaycastHit(bool isPlayer)
         {
-            ($"Player seen: {isPlayer}");
             if (isPlayer)
             {
                 //(gameObject.name + ": " + stateMachine.GetCurrentState());
