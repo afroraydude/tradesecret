@@ -79,19 +79,19 @@ namespace TradeSecret.Enemy
             
             if (!playerSeen)
             {
-                //Debug.Log("resetting chase timer 1");
+                //("resetting chase timer 1");
                 chaseStartTime = currentTime;
             }
 
             if (playerSeen && (currentTime - chaseStartTime) > timeUntilChase && !isChasing)
             {
-                Debug.Log(gameObject.name + ": " + "Begin chase!");
+                (gameObject.name + ": " + "Begin chase!");
                 stateMachine.SwitchState(iStates[(int) States.Pursue]);
                 isChasing = true;
                 cooledDown = false;
             } else if (!playerSeen && (currentTime - cooldownStartTime) > timeUntilCooldown && !cooledDown)
             {
-                Debug.Log(gameObject.name + ": " + "Cooled down!");
+                (gameObject.name + ": " + "Cooled down!");
                 isChasing = false;
                 cooledDown = true;
                 stateMachine.SwitchState(iStates[(int) startState]);
@@ -106,10 +106,10 @@ namespace TradeSecret.Enemy
         /// <param name="isPlayer"></param>
         public void OnRaycastHit(bool isPlayer)
         {
-            Debug.Log($"Player seen: {isPlayer}");
+            ($"Player seen: {isPlayer}");
             if (isPlayer)
             {
-                //Debug.Log(gameObject.name + ": " + stateMachine.GetCurrentState());
+                //(gameObject.name + ": " + stateMachine.GetCurrentState());
                 if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
                 {
                     stateMachine.SwitchState(iStates[(int)States.Warn]);
@@ -117,14 +117,14 @@ namespace TradeSecret.Enemy
 
                 if (!playerSeen)
                 {
-                    //Debug.Log("resetting chase timer 2");
+                    //("resetting chase timer 2");
                     chaseStartTime = currentTime;
                 }
 
                 playerSeen = true;
                 cooledDown = false;
                 stateMachine.GetCurrentState().OnHit(_hit);
-                //Debug.Log(gameObject.name + ": " + stateMachine.GetCurrentState());
+                //(gameObject.name + ": " + stateMachine.GetCurrentState());
             }
             else
             {
