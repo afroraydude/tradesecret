@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 13.704, y: 27.502}
-  m_SizeDelta: {x: 901.4595, y: 339.1327}
+  m_AnchoredPosition: {x: 7.3, y: 66.1}
+  m_SizeDelta: {x: 1141.5577, y: 416.3072}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &161644632
 MonoBehaviour:
@@ -193,16 +193,20 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Welcome to the Trade Secret test level! Before you continue, I do have
-    some things to say.\n\n1. This is a VERY early pre-alpha. Things such as animations,
-    enemy AI, assets...basically everything, is subject to change. \n\n2.There's
-    a Discord server, click the Discord logo below.\n\n3. I made most of this concept
-    in less than a day's work, that includes models, animations, code, etc. Things
-    like the Enemy AI are very basic and will be expanded upon in later updates once
-    I truely figure out what I may want to do with them. This is just a proof of
-    concept!\n\n4. Controls are WASD to move, press C to toggle crouch (its a bit
-    glitchy), and press E to interact with an object.\n\n5. Any suggestions are greaty
-    appreciated! You can DM me or email me. \n\n6. I respond fastest to DMs."
+  m_Text: "Welcome to the Trade Secret test level! (Now updated to pre-alpha v0.2)\n\nChangelog:\n+
+    Added sound detection to enemies (test by interacting with a desk)\n+ Rewrote
+    enemy sight (they see better)\n=========================================================================================================\n\n1.
+    This is a VERY early pre-alpha. Things such as animations, enemy AI, assets...basically
+    everything, is subject to change. \n\n2.There's a Discord server, click the Discord
+    logo below.\n\n3. I made most of this concept in less than a day's work, that
+    includes models, animations, code, etc. Things like the Enemy AI are very basic
+    and will be expanded upon in later updates once I truely figure out what I may
+    want to do with them. This is just a proof of concept!\n\n4. Controls are WASD
+    to move, press C to toggle crouch (its a bit glitchy), and press E to interact
+    with an object.\n\n5. Any suggestions are greaty appreciated! You can DM me or
+    email me. \n=========================================================================================================\nCurrently
+    planned:\n+ Use a seperate pathfinding algorithm\n+ Create a level creation tool
+    so that level development can begin (requires above step to be done"
 --- !u!222 &161644633
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -910,9 +914,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.012152791
     y: 0
-    width: 1
+    width: 0.9756944
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -957,24 +961,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1875509606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b06edcfa32c6f4da9447943c3148b7, type: 3}
+  m_Script: {fileID: 11500000, guid: f4c0480e73cd4e844bf15d05f5401f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 2b1cf5df2bb73a349b2dce7d200c2ef4, type: 3}
-  bend: 4
-  scanlineSize1: 200
-  scanlineSpeed1: -10
-  scanlineSize2: 20
-  scanlineSpeed2: -3
-  scanlineAmount: 0.05
-  vignetteSize: 1.9
-  vignetteSmoothness: 0.6
-  vignetteEdgeRound: 8
-  noiseSize: 75
-  noiseAmount: 0.05
-  redOffset: {x: 0, y: 0}
-  blueOffset: {x: 0, y: 0}
-  greenOffset: {x: 0, y: 0}
+  _preset: {fileID: 11400000, guid: e3835d0f590896c4eb64151e148d6fbe, type: 2}
+  _camera: {fileID: 1875509609}
+  customAspectRatio: 1
+  _aspectRatio: {x: 16, y: 9}
+  timeScale: 1
 --- !u!1 &2028927224
 GameObject:
   m_ObjectHideFlags: 0

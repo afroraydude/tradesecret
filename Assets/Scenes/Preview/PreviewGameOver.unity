@@ -670,8 +670,8 @@ GameObject:
   - component: {fileID: 1875509610}
   - component: {fileID: 1875509609}
   - component: {fileID: 1875509608}
-  - component: {fileID: 1875509611}
   - component: {fileID: 1875509607}
+  - component: {fileID: 1875509611}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -721,9 +721,9 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.012152791
     y: 0
-    width: 1
+    width: 0.9756944
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
@@ -768,24 +768,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1875509606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94b06edcfa32c6f4da9447943c3148b7, type: 3}
+  m_Script: {fileID: 11500000, guid: f4c0480e73cd4e844bf15d05f5401f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: 2b1cf5df2bb73a349b2dce7d200c2ef4, type: 3}
-  bend: 4
-  scanlineSize1: 200
-  scanlineSpeed1: -10
-  scanlineSize2: 20
-  scanlineSpeed2: -3
-  scanlineAmount: 0.05
-  vignetteSize: 1.9
-  vignetteSmoothness: 0.6
-  vignetteEdgeRound: 8
-  noiseSize: 75
-  noiseAmount: 0.05
-  redOffset: {x: 0, y: 0}
-  blueOffset: {x: 0, y: 0}
-  greenOffset: {x: 0, y: 0}
+  _preset: {fileID: 11400000, guid: e3835d0f590896c4eb64151e148d6fbe, type: 2}
+  _camera: {fileID: 1875509609}
+  customAspectRatio: 1
+  _aspectRatio: {x: 16, y: 9}
+  timeScale: 0
 --- !u!1 &2028927224
 GameObject:
   m_ObjectHideFlags: 0

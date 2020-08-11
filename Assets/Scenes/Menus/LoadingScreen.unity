@@ -223,7 +223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 516.6, y: -336.8}
+  m_AnchoredPosition: {x: 480, y: -300}
   m_SizeDelta: {x: 246.9, y: 46.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &884872476
@@ -335,8 +335,8 @@ Canvas:
   m_GameObject: {fileID: 1153878728}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1431601278}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 1431601278}
   - component: {fileID: 1431601277}
   - component: {fileID: 1431601280}
+  - component: {fileID: 1431601281}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -463,6 +464,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb02594b55d640609454cb7f4396337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1431601281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431601276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c0480e73cd4e844bf15d05f5401f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preset: {fileID: 11400000, guid: e3835d0f590896c4eb64151e148d6fbe, type: 2}
+  _camera: {fileID: 1431601278}
+  customAspectRatio: 0
+  _aspectRatio: {x: 4, y: 3}
+  timeScale: 0
 --- !u!1 &1552478023
 GameObject:
   m_ObjectHideFlags: 0

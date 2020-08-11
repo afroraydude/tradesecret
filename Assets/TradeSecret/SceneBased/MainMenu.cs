@@ -34,7 +34,7 @@ namespace TradeSecret.SceneBased
 
         void Play()
         {
-            SceneManager.LoadScene("PreviewLevelLoader");
+            SceneManager.LoadScene("Scenes/Preview/Test");
         }
 
         void Quit()

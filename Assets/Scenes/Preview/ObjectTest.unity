@@ -925,6 +925,39 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3285145410228261148}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1236343532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8992250285803890399, guid: bd2c9b98d8d29a3419bc36f559365143,
+    type: 3}
+  m_PrefabInstance: {fileID: 1147026935092180228}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1236343535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236343532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c2a22819c0429d81bacb559e8f5b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCollider: {fileID: 0}
+  soundDistance: 50
+--- !u!65 &1236343536
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236343532}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: -2.5, y: 2.5, z: -2.5}
 --- !u!1 &1254877927
 GameObject:
   m_ObjectHideFlags: 0
