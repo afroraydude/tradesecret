@@ -12,13 +12,13 @@ namespace TradeSecret.Data
             RefreshmentTable = 3
         }
 
-        public Types _objectType { get; set; }
-        public ObjectPosition _position { get; set; }
+        public Types objectType { get; set; }
+        public ObjectPosition transfrom { get; set; }
 
-        public InteractableObject(int objectType, ObjectPosition position)
+        public InteractableObject(int objectType, ObjectPosition transfrom)
         {
-            this._position = position;
-            this._objectType = (Types)objectType;
+            this.transfrom = transfrom;
+            this.objectType = (Types)objectType;
         }
     }
 }

@@ -17,17 +17,17 @@ namespace TradeSecret.Data
             BasicInteractToFinish = 0
         }
         
-        public Prefabs _prefab { get; set; }
-        public Types _type { get; set; }
-        public ObjectPosition _position { get; set; }
-        public object _data { get; set; }
+        public Prefabs prefab { get; set; }
+        public Types type { get; set; }
+        public ObjectPosition transform { get; set; }
+        public object data { get; set; }
 
-        public MissionTrigger(int prefab, int objectType, ObjectPosition position, object data)
+        public MissionTrigger(int prefab, int objectType, ObjectPosition transform, object data)
         {
-            this._prefab = (Prefabs)prefab;
-            this._position = position;
-            this._type = (Types)objectType;
-            this._data = data;
+            this.prefab = (Prefabs)prefab;
+            this.transform = transform;
+            this.type = (Types)objectType;
+            this.data = data;
         }
     }
 }

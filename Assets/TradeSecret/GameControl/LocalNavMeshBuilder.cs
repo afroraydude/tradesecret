@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
@@ -19,6 +20,11 @@ public class LocalNavMeshBuilder : MonoBehaviour
     NavMeshDataInstance m_Instance;
     List<NavMeshBuildSource> m_Sources = new List<NavMeshBuildSource>();
 
+    private void Awake()
+    {
+        m_Tracked = GameObject.Find("Level").transform;
+    }
+
     IEnumerator Start()
     {
         while (true)
@@ -34,7 +40,7 @@ public class LocalNavMeshBuilder : MonoBehaviour
         m_NavMesh = new NavMeshData();
         m_Instance = NavMesh.AddNavMeshData(m_NavMesh);
         if (m_Tracked == null)
-            m_Tracked = transform;
+            m_Tracked = GameObject.Find("Level").transform;
         UpdateNavMesh(false);
     }
 
@@ -44,7 +50,7 @@ public class LocalNavMeshBuilder : MonoBehaviour
         m_Instance.Remove();
     }
 
-    void UpdateNavMesh(bool asyncUpdate = false)
+    public void UpdateNavMesh(bool asyncUpdate = false)
     {
         NavMeshSourceTag.Collect(ref m_Sources);
         var defaultBuildSettings = NavMesh.GetSettingsByID(0);

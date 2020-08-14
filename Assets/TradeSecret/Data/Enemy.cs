@@ -13,17 +13,17 @@ namespace TradeSecret.Data
             Pursue = 3
         }
 
-        public States _startState { get; set; }
-        public ObjectPosition[] _patrolPoints { get; set; }
-        public ObjectPosition _position { get; set; }
-        string _name { get; set; }
+        public States startState { get; set; }
+        public ObjectPosition[] patrolPoints { get; set; }
+        public ObjectPosition transform { get; set; }
+        string name { get; set; }
 
         public Enemy(string name, ObjectPosition objectPosition, int state, ObjectPosition[] patrolPoints)
         {
-            this._patrolPoints = patrolPoints;
-            this._startState = (States)state;
-            this._position = objectPosition;
-            this._name = name;
+            this.patrolPoints = patrolPoints;
+            this.startState = (States)state;
+            this.transform = objectPosition;
+            this.name = name;
         }
     }
 }

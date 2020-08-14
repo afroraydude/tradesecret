@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 using TradeSecret.Data;
 using TradeSecret.Enemy;
+using UnityEditor;
 using UnityEngine;
 
 namespace TradeSecret.GameControl
@@ -57,11 +59,10 @@ namespace TradeSecret.GameControl
             ObjectData objectData = new ObjectData(_walls.ToArray(), _enemies.ToArray(), _interactableObjects.ToArray(), _missionTriggers.ToArray(), playerPosition);
             
             var oj = JsonConvert.SerializeObject(objectData);
-            Debug.Log(oj);
             SceneData sceneData = new SceneData(objectData);
             LevelFile levelFileStruct = new LevelFile(levelInformation, sceneData);
             var json = JsonConvert.SerializeObject(levelFileStruct);
-            Debug.Log(json);
+            WriteLevelDataToFile(json);
             
             DestroyImmediate(singular);
         }
@@ -70,10 +71,11 @@ namespace TradeSecret.GameControl
         {
             Transform[] wallTransforms = levelData.GetComponentsInChildren<Transform>();
 
-            foreach (Transform w in wallTransforms) 
+            foreach (Transform w in wallTransforms)
             {
+                
                 if (w.gameObject.name != "LevelData")
-                    _walls.Add(new ObjectPosition(w.position.x, w.position.y, w.position.z, w.rotation));
+                    _walls.Add(new ObjectPosition(w.position, w.rotation, w.localScale));
             }
         }
 
@@ -136,6 +138,17 @@ namespace TradeSecret.GameControl
             }
             
             _interactableObjects.Add(new InteractableObject(prefab, new ObjectPosition(localGameObject.transform.position, localGameObject.transform.rotation)));
+        }
+
+        private void WriteLevelDataToFile(string json)
+        {
+            string dataPath = Application.dataPath;
+            string levelPath = dataPath + "/Scenes/Levels";
+            Debug.Log(levelPath);
+            string filename = GUID.Generate().ToString() + ".level";
+            string filePath = Path.Combine(levelPath, filename);
+            Debug.Log(filePath);
+            File.WriteAllText(filePath, json);
         }
     }
 }
