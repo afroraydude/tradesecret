@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 using TradeSecret.Data;
 using TradeSecret.Enemy;
 using UnityEngine;
@@ -8,12 +9,13 @@ namespace TradeSecret.GameControl
 {
     public class TestGenerator : MonoBehaviour
     {
-        List<Wall> _walls = new List<Wall>();
+        List<ObjectPosition> _walls = new List<ObjectPosition>();
         List<Data.Enemy> _enemies = new List<Data.Enemy>();
         List<InteractableObject> _interactableObjects = new List<InteractableObject>();
         List<MissionTrigger> _missionTriggers = new List<MissionTrigger>();
-        
-        public void CreateLevelFile()
+        ObjectPosition playerPosition;
+
+        public void CreateLevelFile(LevelInformation levelInformation)
         {
             GameObject singular = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -45,7 +47,21 @@ namespace TradeSecret.GameControl
                 {
                     CreateMissionTriggers(o);
                 }
+
+                if (o.CompareTag("Player"))
+                {
+                    playerPosition = new ObjectPosition(o.transform.position);
+                }
             }
+            
+            ObjectData objectData = new ObjectData(_walls.ToArray(), _enemies.ToArray(), _interactableObjects.ToArray(), _missionTriggers.ToArray(), playerPosition);
+            
+            var oj = JsonConvert.SerializeObject(objectData);
+            Debug.Log(oj);
+            SceneData sceneData = new SceneData(objectData);
+            LevelFile levelFileStruct = new LevelFile(levelInformation, sceneData);
+            var json = JsonConvert.SerializeObject(levelFileStruct);
+            Debug.Log(json);
             
             DestroyImmediate(singular);
         }
@@ -57,7 +73,7 @@ namespace TradeSecret.GameControl
             foreach (Transform w in wallTransforms) 
             {
                 if (w.gameObject.name != "LevelData")
-                    _walls.Add(new Wall(new ObjectPosition(w.position.x, w.position.y, w.position.z)));
+                    _walls.Add(new ObjectPosition(w.position.x, w.position.y, w.position.z, w.rotation));
             }
         }
 
@@ -75,7 +91,7 @@ namespace TradeSecret.GameControl
                 if (t.gameObject.name != $"{enemy.name} Patrol Points")
                 {
                     //Debug.Log(new ObjectPosition(t.position.x, t.position.y, t.position.z).ToString());
-                    patrolPoints.Add(new ObjectPosition(t.position.x, t.position.y, t.position.z));
+                    patrolPoints.Add(new ObjectPosition(t.position.x, t.position.y, t.position.z, t.rotation));
                 }
             }
             _enemies.Add(new Data.Enemy(name, position, state, patrolPoints.ToArray()));
@@ -99,7 +115,7 @@ namespace TradeSecret.GameControl
                 prefab = 3;
             }
             
-            _missionTriggers.Add(new MissionTrigger(prefab, type, new ObjectPosition(localGameObject.transform.position), null));
+            _missionTriggers.Add(new MissionTrigger(prefab, type, new ObjectPosition(localGameObject.transform.position, localGameObject.transform.rotation), null));
         }
         
         private void CreateInteractableObjects(GameObject localGameObject)
@@ -119,7 +135,7 @@ namespace TradeSecret.GameControl
                 prefab = 3;
             }
             
-            _interactableObjects.Add(new InteractableObject(prefab, new ObjectPosition(localGameObject.transform.position)));
+            _interactableObjects.Add(new InteractableObject(prefab, new ObjectPosition(localGameObject.transform.position, localGameObject.transform.rotation)));
         }
     }
 }

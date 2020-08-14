@@ -5,7 +5,7 @@ namespace TradeSecret.Data
 {
     public struct Enemy
     {
-        private enum States
+        public enum States
         {
             Idle = 0,
             Patrol = 1,
@@ -13,10 +13,10 @@ namespace TradeSecret.Data
             Pursue = 3
         }
 
-        private States _startState;
-        private ObjectPosition[] _patrolPoints;
-        private ObjectPosition _position;
-        private string _name;
+        public States _startState { get; set; }
+        public ObjectPosition[] _patrolPoints { get; set; }
+        public ObjectPosition _position { get; set; }
+        string _name { get; set; }
 
         public Enemy(string name, ObjectPosition objectPosition, int state, ObjectPosition[] patrolPoints)
         {

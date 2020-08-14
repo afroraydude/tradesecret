@@ -4,22 +4,38 @@ namespace TradeSecret.Data
 {
     public struct ObjectPosition
     {
-        private float x;
-        private float y;
-        private float z;
 
+        public Vector3 position;
+        public LocalQuanternion rotation;
+        
         public ObjectPosition(float x, float y, float z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            this.position = new Vector3(x, y, z);
+            this.rotation = new LocalQuanternion();
         }
 
         public ObjectPosition(Vector3 position)
         {
-            this.x = position.x;
-            this.y = position.y;
-            this.z = position.z;
+            this.position = position;
+            this.rotation = new LocalQuanternion();
+        }
+
+        public ObjectPosition(Vector3 position, float x, float y, float z)
+        {
+            this.position = position;
+            this.rotation = new LocalQuanternion();
+        }
+
+        public ObjectPosition(float x, float y, float z, Quaternion rotation)
+        {
+            this.position = new Vector3(x, y, z);
+            this.rotation = new LocalQuanternion(rotation);
+        }
+        
+        public ObjectPosition(Vector3 position, Quaternion rotation)
+        {
+            this.position = position;
+            this.rotation = new LocalQuanternion(rotation);
         }
     }
 }

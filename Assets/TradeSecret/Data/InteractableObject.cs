@@ -4,7 +4,7 @@ namespace TradeSecret.Data
 {
     public struct InteractableObject
     {
-        enum Types
+        public enum Types
         {
             Undefined = 0,
             Table = 1,
@@ -12,8 +12,8 @@ namespace TradeSecret.Data
             RefreshmentTable = 3
         }
 
-        private Types _objectType;
-        private ObjectPosition _position;
+        public Types _objectType { get; set; }
+        public ObjectPosition _position { get; set; }
 
         public InteractableObject(int objectType, ObjectPosition position)
         {

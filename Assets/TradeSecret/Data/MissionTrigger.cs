@@ -4,7 +4,7 @@ namespace TradeSecret.Data
 {
     public struct MissionTrigger
     {
-        enum Prefabs
+        public enum Prefabs
         {
             Undefined = 0,
             Table = 1,
@@ -12,15 +12,15 @@ namespace TradeSecret.Data
             RefreshmentTable = 3
         }
 
-        enum Types
+        public enum Types
         {
             BasicInteractToFinish = 0
         }
         
-        private Prefabs _prefab;
-        private Types _type;
-        private ObjectPosition _position;
-        private object _data;
+        public Prefabs _prefab { get; set; }
+        public Types _type { get; set; }
+        public ObjectPosition _position { get; set; }
+        public object _data { get; set; }
 
         public MissionTrigger(int prefab, int objectType, ObjectPosition position, object data)
         {

@@ -1,14 +1,14 @@
 ﻿{
   "levelInformation": {
     "title": "Mission #1",
-    "description": "Lorem ipsum"
-  },
-  "sceneData": {
+    "description": "Lorem ipsum",
     "size": {
       "x": 100,
       "z": 100
-    },
-    "objects": {
+    }
+  },
+  "sceneData": {
+    "objectDataL": {
       "walls": [
         {
           "x": 25,
