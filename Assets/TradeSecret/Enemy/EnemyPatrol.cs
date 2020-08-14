@@ -24,6 +24,7 @@ namespace TradeSecret.Enemy
 
         private void Awake()
         {
+            patrolPoints = GameObject.Find($"{gameObject.name} Patrol Points").GetComponentsInChildren<Transform>();   
             agent = GetComponentInParent<NavMeshAgent>();
 
             agent.autoBraking = autoBrake;

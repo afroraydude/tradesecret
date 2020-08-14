@@ -32,7 +32,7 @@ namespace TradeSecret.Enemy
 
         private Vector3 _hit;
 
-        private enum States
+        public enum States
         {
             Idle = 0,
             Patrol = 1,
@@ -44,12 +44,13 @@ namespace TradeSecret.Enemy
         [SerializeField] private States debugCurrentState;
 
         // Original state
-        [SerializeField] private States startState = States.Idle;
+        public States startState = States.Idle;
 
         List<EnemyState> iStates = new List<EnemyState>();
 
         void Awake()
         {
+            player = GameObject.Find("player");
             enemySight = GetComponentInParent<EnemySight>();
             enemyPatrol = GetComponentInParent<EnemyPatrol>();
             enemyAnimator = GetComponentInParent<Animator>();

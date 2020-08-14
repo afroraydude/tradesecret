@@ -594,13 +594,15 @@ MonoBehaviour:
   playerSeen: 0
   cooledDown: 1
   isChasing: 0
+  chaseTimerRunning: 0
+  cooldownTimerRunning: 0
   currentTime: 0
-  scanStartTime: 0
+  chaseStartTime: 0
   timeUntilChase: 2
   cooldownStartTime: 0
   timeUntilCooldown: 10
   debugCurrentState: 0
-  startState: 1
+  startState: 0
 --- !u!114 &6433735279505378500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -637,6 +639,8 @@ MonoBehaviour:
   raycastRotation: {x: 0, y: 0, z: 0, w: 0}
   enemyHead: {fileID: 0}
   enemyAnimator: {fileID: 0}
+  globalRaycast: {x: 0, y: 0, z: 0}
+  playerHit: 0
 --- !u!114 &2025753325568947073
 MonoBehaviour:
   m_ObjectHideFlags: 0

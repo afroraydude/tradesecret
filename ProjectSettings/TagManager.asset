@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PatrolPoint_Look
   - Enemy
+  - InteractableObject
+  - MissionTrigger
   layers:
   - Default
   - TransparentFX

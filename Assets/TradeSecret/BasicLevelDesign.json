@@ -1,0 +1,73 @@
+﻿{
+  "levelInformation": {
+    "title": "Mission #1",
+    "description": "Lorem ipsum"
+  },
+  "sceneData": {
+    "size": {
+      "x": 100,
+      "z": 100
+    },
+    "objects": {
+      "walls": [
+        {
+          "x": 25,
+          "y": 5,
+          "z": 10
+        },
+        {
+          "x": 10,
+          "y": 5,
+          "z": 20
+        }
+      ],
+      "enemies": [
+        {
+          "name": "enemy1",
+          "position": {
+            "x": 10,
+            "y": 5,
+            "z": 2
+          },
+          "patrolPoints": [
+            {
+              "type": "PatrolPoint_Look",
+              "x": 10,
+              "y": 5,
+              "z": 2
+            },
+            {
+              "type": "PatrolPoint_Default",
+              "x": 10,
+              "y": 5,
+              "z": 2
+            }
+          ]
+        }
+      ],
+      "interactableObjects": [
+        {
+          "type": "Desk",
+          "x": 10,
+          "y": 5,
+          "z": 2
+        }
+      ],
+      "missionTriggers":[
+        {
+          "prefab": "Desk",
+          "type": "BasicInteractToFinish",
+          "data": {},
+          "x": 10,
+          "y": 5,
+          "z": 2
+        }
+      ],
+      "playerPosition": {
+        "x": 10,
+        "y": 10,
+        "z": 10
+      }
+    }
+  }
+}
