@@ -60,7 +60,13 @@ namespace TradeSecret.Enemy
 
         void Start()
         {
-            iStates.AddRange(new EnemyState[] { new EnemyStateIdle(enemyAnimator, enemyPatrol), new EnemyStatePatrol(enemyAnimator, enemyPatrol), new EnemyStateWarn(enemyAnimator, enemyPatrol), new EnemyStatePursue(enemyAnimator, enemyPatrol, player) });
+            iStates.AddRange(new EnemyState[]
+            {
+                new EnemyStateIdle(enemyAnimator, enemyPatrol), 
+                new EnemyStatePatrol(enemyAnimator, enemyPatrol), 
+                new EnemyStateWarn(enemyAnimator, enemyPatrol), 
+                new EnemyStatePursue(enemyAnimator, enemyPatrol, player)
+            });
 
             if (enemyPatrol.patrolPoints.Length > 0)
                 stateMachine.SwitchState(iStates[(int) startState]);

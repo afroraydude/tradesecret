@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
@@ -62,7 +63,7 @@ namespace TradeSecret.GameControl
             SceneData sceneData = new SceneData(objectData);
             LevelFile levelFileStruct = new LevelFile(levelInformation, sceneData);
             var json = JsonConvert.SerializeObject(levelFileStruct);
-            WriteLevelDataToFile(json);
+            WriteLevelDataToFile(json, levelInformation.title);
             
             DestroyImmediate(singular);
         }
@@ -140,14 +141,16 @@ namespace TradeSecret.GameControl
             _interactableObjects.Add(new InteractableObject(prefab, new ObjectPosition(localGameObject.transform.position, localGameObject.transform.rotation)));
         }
 
-        private void WriteLevelDataToFile(string json)
+        private void WriteLevelDataToFile(string json, string levelName)
         {
             string dataPath = Application.dataPath;
             string levelPath = dataPath + "/Scenes/Levels";
             Debug.Log(levelPath);
-            string filename = GUID.Generate().ToString() + ".level";
+            string name = levelName.Replace(" ", "_");
+            string filename = name + ".level";
             string filePath = Path.Combine(levelPath, filename);
             Debug.Log(filePath);
+            
             File.WriteAllText(filePath, json);
         }
     }

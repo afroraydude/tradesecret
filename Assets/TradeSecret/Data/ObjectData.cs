@@ -7,7 +7,6 @@
         public InteractableObject[] interactableObjects { get; set; }
         public MissionTrigger[] missionTriggers { get; set; }
         public ObjectPosition playerPosition { get; set; }
-
         public ObjectData(ObjectPosition[] walls, Enemy[] enemies, InteractableObject[] interactableObjects,
             MissionTrigger[] missionTriggers, ObjectPosition playerPosition)
         {

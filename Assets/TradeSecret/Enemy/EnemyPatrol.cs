@@ -22,30 +22,38 @@ namespace TradeSecret.Enemy
         
         public float minRemainingDistance = 0.5f;
 
+        private bool patrolPointsLoaded = false;
+
         private void Awake()
         {
-            patrolPoints = GameObject.Find($"{gameObject.name} Patrol Points").GetComponentsInChildren<Transform>();   
             agent = GetComponentInParent<NavMeshAgent>();
 
             agent.autoBraking = autoBrake;
             enemyAnimator = GetComponentInParent<Animator>();
-            
-            if (patrolPoints.Length == 0)
-            {
-                patrolPoints = new Transform[] {this.transform};
-            }
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            //GoToNextPoint();
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (!patrolPointsLoaded)
+                try
+                {
+                    patrolPoints = GameObject.Find($"{gameObject.name} Patrol Points")
+                        .GetComponentsInChildren<Transform>();
+                }
+                catch
+                {
+                    // do nothing
+                }
+            if (patrolPoints.Length > 0)
+            {
+                if (patrolPoints.Length == 0)
+                {
+                    patrolPoints = new Transform[] {this.transform};
+                }
 
+                patrolPointsLoaded = true;
+            }
         }
 
         public void GoToNextPoint()
