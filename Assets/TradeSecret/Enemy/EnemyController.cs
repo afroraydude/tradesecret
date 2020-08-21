@@ -109,15 +109,25 @@ namespace TradeSecret.Enemy
         /// Switches state and navmesh destination based on Raycasts
         /// </summary>
         /// <param name="isPlayer"></param>
-        public void OnRaycastHit(bool isPlayer)
+        public void OnRaycastHit(int isPlayer)
         {
-            if (isPlayer)
+            if (isPlayer != 0)
             {
                 _hit = enemySight.globalRaycast;
                 //(gameObject.name + ": " + stateMachine.GetCurrentState());
-                if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                if (isPlayer == 1)
                 {
-                    stateMachine.SwitchState(iStates[(int)States.Warn]);
+                    if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                    {
+                        stateMachine.SwitchState(iStates[(int) States.Warn]);
+                    }
+                }
+                else if (isPlayer == 2)
+                {
+                    if (!isChasing && stateMachine.GetCurrentState() != iStates[(int) States.Pursue])
+                    {
+                        stateMachine.SwitchState(iStates[(int) States.Pursue]);
+                    }
                 }
 
                 if (!playerSeen)
@@ -151,10 +161,12 @@ namespace TradeSecret.Enemy
                             stateMachine.SwitchState(iStates[(int) startState]);
                         }
 
-                        if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
+                        else if (!cooledDown && stateMachine.GetCurrentState() != iStates[(int) States.Warn])
                         {
                             stateMachine.SwitchState(iStates[(int) States.Warn]);
                         }
+                        
+                        
                     }
                 }
                 //stateMachine.SwitchToPreviousState();

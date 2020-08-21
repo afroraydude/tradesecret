@@ -17,7 +17,7 @@ namespace TradeSecret.Enemy
         public Transform enemyHead;
         public Animator enemyAnimator;
         public Vector3 globalRaycast;
-        public bool playerHit = false;
+        public int playerHit = 0;
 
         private void Awake()
         {
@@ -46,7 +46,7 @@ namespace TradeSecret.Enemy
             raycastPosition = enemyHead.transform.position;
             raycastRotation = enemyHead.transform.rotation;
 
-            playerHit = false;
+            playerHit = 0;
             
             GenerateFrontSpherecast();
             GenerateRightRaycast();
@@ -67,7 +67,9 @@ namespace TradeSecret.Enemy
                 if (hit.collider.tag == "Player")
                 {
                     globalRaycast = hit.collider.gameObject.transform.position;
-                    playerHit = true;
+                    playerHit = 1;
+
+                    if (hit.distance < 20.0f) playerHit = 2;
                 }
                 else
                 {
@@ -92,7 +94,8 @@ namespace TradeSecret.Enemy
                 if (hit.collider.tag == "Player")
                 {
                     globalRaycast = hit.collider.gameObject.transform.position;
-                    playerHit = true;
+                    playerHit = 1;
+                    if (hit.distance < 20.0f) playerHit = 2;
                 }
                 else
                 {
@@ -118,7 +121,8 @@ namespace TradeSecret.Enemy
                 if (hit.collider.tag == "Player")
                 {
                     globalRaycast = hit.collider.gameObject.transform.position;
-                    playerHit = true;
+                    playerHit = 1;
+                    if (hit.distance < 20.0f) playerHit = 2;
                 }
                 else
                 {
