@@ -21,7 +21,7 @@ namespace TradeSecret.Data
         public Types type { get; set; }
         public ObjectPosition transform { get; set; }
         public object data { get; set; }
-
+        
         public MissionTrigger(int prefab, int objectType, ObjectPosition transform, object data)
         {
             this.prefab = (Prefabs)prefab;

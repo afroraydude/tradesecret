@@ -23,28 +23,62 @@ namespace TradeSecret.GameControl
             
         }
 
+        /// <summary>
+        /// Runs before first frame, great for loading crap in
+        /// </summary>
         private void Awake()
         {
-            var levelFile = LoadLevelDataFromFile("Test_Level");
-            _level = JsonConvert.DeserializeObject<LevelFile>(levelFile);
-            Debug.Log(_level.LevelInformation.title);
-            GameObject Level = new GameObject("Level");
+            LoadLevel();
+        }
+
+        /// <summary>
+        /// Load in a level from JSON
+        /// </summary>
+        /// <param name="name">JSON file, negate extension</param>
+        /// <param name="isReload">Use if reloading.</param>
+        public void LoadLevel(string name="Test_Level", bool isReload=false)
+        {
+            if (isReload) UnloadLevel();
+            var levelFile = LoadLevelDataFromFile(name); // load json first
+            _level = JsonConvert.DeserializeObject<LevelFile>(levelFile); // then load actual data
+            GameObject Level = new GameObject("Level"); // Generate level object for walls n stuff
+            
+            // floor
             GameObject levelFloor = floor;
             levelFloor.transform.localScale = new Vector3(_level.LevelInformation.sizeX, 1, _level.LevelInformation.sizeY);
             Instantiate(levelFloor);
+            
+            //  player
             var playerT = _level.sceneData.objectData.playerPosition;
             var playerR = (new Quaternion(playerT.rotation.x, playerT.rotation.y, playerT.rotation.z, playerT.rotation.w));
             var p = Instantiate(player, playerT.position, playerR);
-            p.transform.Rotate(0, 90, 0);
+            p.transform.Rotate(0, 90, 0); // for some reason the player sometimes comes out this way
+
+            // create all non-enemy objects
             CreateWalls(_level.sceneData.objectData.walls, Level);
             CreateInteractableObjects(_level.sceneData.objectData.interactableObjects);
+            CreateMissionTriggers(_level.sceneData.objectData.missionTriggers);
             
+            // Create navmesh before loading in enemies so they don't crash the game
             LocalNavMeshBuilder localNavMeshBuilder = gameObject.AddComponent<LocalNavMeshBuilder>();
-            localNavMeshBuilder.UpdateNavMesh();
+            localNavMeshBuilder.UpdateNavMesh(); 
+            
+            // then create enemies
             CreateEnemies(_level.sceneData.objectData.enemies);
         }
+
+        public void UnloadLevel()
+        {
+            GameObject level = GameObject.Find("Level");
+            Destroy(level);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (var enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+        }
         
-        private string LoadLevelDataFromFile(string levelName)
+        public string LoadLevelDataFromFile(string levelName)
         {
             string dataPath = Application.dataPath;
             string levelPath = dataPath + "/Scenes/Levels";
@@ -53,11 +87,6 @@ namespace TradeSecret.GameControl
             string filePath = Path.Combine(levelPath, filename);
             Debug.Log(filePath);
             return File.ReadAllText(filePath);
-        }
-
-        private void CreateNavMesh()
-        {
-            
         }
 
         private void CreateEnemies(TradeSecret.Data.Enemy[] enemies)

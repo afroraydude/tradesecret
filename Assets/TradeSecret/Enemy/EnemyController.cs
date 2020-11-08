@@ -16,14 +16,14 @@ namespace TradeSecret.Enemy
 
         [SerializeField] private bool playerSeen;
         [SerializeField] private bool cooledDown = true;
-        [FormerlySerializedAs("chaseBegun")] [SerializeField] private bool isChasing = false;
+        [SerializeField] private bool isChasing = false;
         [SerializeField] private bool chaseTimerRunning;
         [SerializeField] private bool cooldownTimerRunning;
 
         
         [SerializeField] private float currentTime;
         
-        [FormerlySerializedAs("scanStartTime")] [SerializeField] private float chaseStartTime;
+        [SerializeField] private float chaseStartTime;
         [SerializeField] private float timeUntilChase = 2;
         
         // cooldown

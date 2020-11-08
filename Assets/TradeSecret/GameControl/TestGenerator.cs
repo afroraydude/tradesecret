@@ -12,12 +12,26 @@ namespace TradeSecret.GameControl
 {
     public class TestGenerator : MonoBehaviour
     {
+        // Create a list for each object type to store in level
+        /*
+         * ObjectPosition(s) are basically a storage of 3 things,
+         * position, Rotation (Euler angles), and scale.
+         * All 3 of these are stored together into one "object"
+         * to be more easily stored in a JSON format for reuse.
+         * At the core level, all other objects are just inheritances
+         * of ObjectPoisiton(s)
+         */
         List<ObjectPosition> _walls = new List<ObjectPosition>();
         List<Data.Enemy> _enemies = new List<Data.Enemy>();
         List<InteractableObject> _interactableObjects = new List<InteractableObject>();
         List<MissionTrigger> _missionTriggers = new List<MissionTrigger>();
-        ObjectPosition playerPosition;
+        ObjectPosition playerPosition; 
 
+        /// <summary>
+        /// Use to be able to pull all level data from a level and store that data in a
+        /// JSON format.
+        /// </summary>
+        /// <param name="levelInformation"></param>
         public void CreateLevelFile(LevelInformation levelInformation)
         {
             GameObject singular = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -63,11 +77,15 @@ namespace TradeSecret.GameControl
             SceneData sceneData = new SceneData(objectData);
             LevelFile levelFileStruct = new LevelFile(levelInformation, sceneData);
             var json = JsonConvert.SerializeObject(levelFileStruct);
-            WriteLevelDataToFile(json, levelInformation.title);
+            WriteLevelDataToFile(json, levelInformation.title.ToLower());
             
             DestroyImmediate(singular);
         }
 
+        /// <summary>
+        /// Creates the walls
+        /// </summary>
+        /// <param name="levelData">LevelData object that stores all wall objects as children</param>
         private void CreateLevelData(GameObject levelData)
         {
             Transform[] wallTransforms = levelData.GetComponentsInChildren<Transform>();
@@ -80,6 +98,10 @@ namespace TradeSecret.GameControl
             }
         }
 
+        /// <summary>
+        /// Populates enemy list
+        /// </summary>
+        /// <param name="enemy">enemy object</param>
         private void CreateEnemyData(GameObject enemy)
         {
             Transform[] patrolPointsTransform = GameObject.Find($"{enemy.name} Patrol Points").GetComponentsInChildren<Transform>();
@@ -100,6 +122,10 @@ namespace TradeSecret.GameControl
             _enemies.Add(new Data.Enemy(name, position, state, patrolPoints.ToArray()));
         }
 
+        /// <summary>
+        /// Populate mission checkpoints list
+        /// </summary>
+        /// <param name="localGameObject"></param>
         private void CreateMissionTriggers(GameObject localGameObject)
         {
             int prefab = 0;
@@ -121,6 +147,10 @@ namespace TradeSecret.GameControl
             _missionTriggers.Add(new MissionTrigger(prefab, type, new ObjectPosition(localGameObject.transform.position, localGameObject.transform.rotation), null));
         }
         
+        /// <summary>
+        /// Populate non-npc objects list
+        /// </summary>
+        /// <param name="localGameObject"></param>
         private void CreateInteractableObjects(GameObject localGameObject)
         {
             int prefab = 0;
@@ -141,6 +171,11 @@ namespace TradeSecret.GameControl
             _interactableObjects.Add(new InteractableObject(prefab, new ObjectPosition(localGameObject.transform.position, localGameObject.transform.rotation)));
         }
 
+        /// <summary>
+        /// Write all of this to a file
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="levelName"></param>
         private void WriteLevelDataToFile(string json, string levelName)
         {
             string dataPath = Application.dataPath;
